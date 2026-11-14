@@ -1,5 +1,5 @@
 # SI-generated code: written by Claude (Anthropic) via Claude Code under team direction. Project idea: human (team).
-# Publishes the static dashboard in web/ to GitHub Pages. No secrets are used: the site is fully static.
+# Builds the Next.js static export in site/ and publishes site/out to GitHub Pages. No secrets are used.
 name: Deploy Flamescope to GitHub Pages
 on:
   push:
@@ -20,9 +20,18 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: site/package-lock.json
+      - run: npm ci
+        working-directory: site
+      - run: npm run build
+        working-directory: site
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: web
+          path: site/out
       - id: deployment
         uses: actions/deploy-pages@v4

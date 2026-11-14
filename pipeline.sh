@@ -15,5 +15,5 @@ if [ -x .venv/bin/python ] && { [ -n "${GROQ_API_KEY:-}" ] || grep -qs '^GROQ_AP
 fi
 if [ $# -eq 0 ] && [ -f data/llm_answers_for_eval.json ]; then set -- data/llm_answers_for_eval.json; fi
 python3 -I scripts/eval.py "$@"    # 5. eval set checks + retrieval scores (+ LLM answer scores when present)
-python3 -I scripts/export.py       # 6. validated insight cards + web/data.js
-echo "Open web/index.html, or run: python3 -m http.server 8765 --directory web"
+python3 -I scripts/export.py       # 6. validated insight cards + site/src/data/bundle.json
+echo "Next: cd site && npm ci && npm run build"

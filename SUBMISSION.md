@@ -9,7 +9,7 @@ Flamescope
 Flamescope is a web dashboard that turns decades of NASA microgravity fire experiments into answers crews can use on the Moon and Mars. It collects flame-spread runs from NASA technical reports and Physical Sciences Informatics (PSI) datasets into one table, one row per experiment run. It then summarizes them as insight cards, ranks them against lunar and Martian cabin atmospheres, and answers questions in plain English. Every claim links to the run or source passage it came from, and the system refuses when the sources don't support an answer. As crews prepare to live in oxygen-enriched, low-pressure habitats, Flamescope makes the existing fire evidence easy to find, compare, and trust. It also shows clearly where that evidence runs out.
 
 ## Link to Project Demo
-https://enigmahacker.github.io/flamescope/deck.html (7 slides; use the arrow keys or the Next button. Print to PDF gives one slide per page.) Fill in the team name and member names on slide 1 (`web/deck.html`) before you submit.
+https://enigmahacker.github.io/flamescope/deck.html (7 slides; use the arrow keys or the Next button. Print to PDF gives one slide per page.) Fill in the team name and member names on slide 1 (`site/public/deck.html`) before you submit.
 
 ## Link to Final Project
 https://enigmahacker.github.io/flamescope/ (source code: https://github.com/enigmahacker/flamescope)

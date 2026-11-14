@@ -2,7 +2,7 @@
 
 Pipeline step 6: validate insight cards and bundle everything the static dashboard needs.
 
-Usage: python3 -I scripts/export.py   -> web/data.js (window.DATA = {...}; loads over file:// with no server)
+Usage: python3 -I scripts/export.py   -> site/src/data/bundle.json (the Next.js site imports it at build time)
 """
 import json, re, sys
 from pathlib import Path
@@ -58,9 +58,10 @@ def main():
         "llm_prompt": json.loads((DATA / "llm_prompt.json").read_text(encoding="utf-8")),
         "llm_model": model,
     }
-    (ROOT / "web").mkdir(exist_ok=True)
-    (ROOT / "web/data.js").write_text("window.DATA = " + json.dumps(bundle, ensure_ascii=False) + ";\n", encoding="utf-8")
-    print(f"web/data.js: {len(runs)} runs, {len(chunks)} chunks, {len(cards)} cards ({[c['status'] for c in cards]})")
+    out = ROOT / "site/src/data/bundle.json"  # imported by the Next.js site at build time
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(json.dumps(bundle, ensure_ascii=False), encoding="utf-8")
+    print(f"{out.relative_to(ROOT)}: {len(runs)} runs, {len(chunks)} chunks, {len(cards)} cards ({[c['status'] for c in cards]})")
 
 
 if __name__ == "__main__":
