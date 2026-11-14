@@ -54,7 +54,6 @@ About     fold-out panels: how it works, SI use, NASA data, references, evaluati
 ```
 - Left-aligned, asymmetric two-column sections that collapse to one column on phones.
 - Lists and dividers instead of card grids. Panels are used only for answers and inputs.
-- The sign-in page is a split screen: the flame on the left, the form on the right.
 
 ## Motion
 - Spring easing on reveals, the nav pill, the filter pills, and the citation dialog (Framer Motion).
@@ -64,6 +63,6 @@ About     fold-out panels: how it works, SI use, NASA data, references, evaluati
 ## Quality floor
 - Visible keyboard focus on every control.
 - Labels above inputs, inline error text, loading skeletons, and written empty states.
-- No horizontal scroll at 375 px (checked on the dashboard and the sign-in page).
+- No horizontal scroll at 375 px (checked on the dashboard).
 - A grain texture sits on a fixed, non-interactive layer, so scrolling never repaints it.
 - No NASA logos or branding.

@@ -90,7 +90,6 @@ These are candidates for the next round of seed documents.
 - **Framer Motion:** https://www.framer.com/motion/
 - **Phosphor Icons:** https://phosphoricons.com
 - **Geist and Geist Mono** typefaces: https://vercel.com/font (the deck loads them from https://fonts.google.com/specimen/Geist)
-- **Web Crypto API** (PBKDF2 for the sign-in): https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/deriveBits
 - **Node.js** (site build): https://nodejs.org
 - **GitHub Pages:** https://pages.github.com
 - **GitHub Actions** used to deploy:

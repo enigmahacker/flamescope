@@ -12,7 +12,7 @@ Flamescope is team Berkelium's NASA Space Apps 2026 entry. The challenge: an SI-
 
 **Already built:**
 - The data pipeline (`scripts/`, `pipeline.sh`).
-- The frontend: a Next.js 16 + Tailwind 4 static export in `site/`, behind a client-side sign-in page. Ask the team lead for the credentials; only salted hashes are in the repo.
+- The frontend: a Next.js 16 + Tailwind 4 static export in `site/`. It is public, with no sign-in, because the submission guide requires links that need no password.
 - The 7-slide demo deck (`site/public/deck.html`).
 
 **Your job: build the backend** (section 5). Read [DOCUMENTATION.md](DOCUMENTATION.md) for the full system and the data contract (its section 6).
@@ -31,11 +31,12 @@ Flamescope is team Berkelium's NASA Space Apps 2026 entry. The challenge: an SI-
 8. **If the sources don't support an answer, say so** (`supported: false`).
 9. **No document is ingested without a manifest entry** (`data/manifest.csv`).
 10. **Copyright:** the NTRS papers 19950007798 and 19970020608 are flagged "may include copyright material". Publish only short excerpts, never their full text. Their `.txt` files are gitignored.
-11. **Never commit or ship an API key or a plaintext password.** The Groq key lives in `.env` (gitignored) or a server environment variable. Site credentials exist in the repo only as salted hashes.
+11. **Never commit or ship an API key or a plaintext password.** The Groq key lives in `.env` (gitignored) or a server environment variable.
 12. **English only.**
 13. **Label SI use:** every new file gets the one-line SI header used in `scripts/*.py`. Generated data carries `ai_generated` or `extraction_method` metadata. Add an entry to `changelog.md` for every change, with its reason.
 14. **The project idea is always credited as human.** Everything SI touched is flagged (DOCUMENTATION.md section 2).
 15. **No NASA logos or branding** anywhere in the site or the deck.
+16. **The public site and deck must open with no password.** The Space Apps guide requires it. Any future sign-in protects only team tools (such as verification), never the judged pages.
 
 ## 2. Repository map
 | Path | Role |
@@ -51,9 +52,7 @@ Flamescope is team Berkelium's NASA Space Apps 2026 entry. The challenge: an SI-
 | `site/src/lib/engine.ts` | Browser retrieval (BM25), the number rule (`checkAnswer`), and the live Groq call (`liveAnswer`) |
 | `site/src/components/Ask.tsx` | The Ask section. `ask()` is the integration point for a backend. |
 | `site/src/components/Dashboard.tsx` | Nav, hero, Evidence, Rank, Runs, About, footer |
-| `site/src/lib/auth.ts`, `site/src/components/LoginForm.tsx`, `site/src/components/Gate.tsx` | The client-side sign-in gate. Not access control: replace it with backend auth. |
-| `site/scripts/hash-credentials.mjs` | Writes `site/src/data/auth.json` (salted PBKDF2-SHA-256 hashes) |
-| `site/public/deck.html` | The demo deck. A plain HTML file, also behind the gate. |
+| `site/public/deck.html` | The demo deck, a plain HTML file. |
 | `site/AGENTS.md` | Next.js 16 has breaking changes. Read `site/node_modules/next/dist/docs/` before editing the site. |
 | `DESIGN.md`, `design-tokens.json` | The design system (dark theme, Geist, one ember accent) |
 
@@ -76,7 +75,7 @@ Flamescope is team Berkelium's NASA Space Apps 2026 entry. The challenge: an SI-
 - **Live answers:** work with a visitor's own Groq key (the key stays in their browser tab).
 - **Offline Groq answers:** not generated yet; no key on the build machine. `data/llm_answers.json` does not exist.
 - **Embeddings:** blocked (Hugging Face 403 on `google/embeddinggemma-300m`).
-- **Sign-in:** the whole site and the deck sit behind a browser-only gate. The submission guide asks for no-password links, so judges need the credentials in the project description.
+- **Access:** the site and the deck are public. The earlier browser-only sign-in gate was removed before submission.
 - **Open team decisions:**
   - Mars target citation (101 kPa / 21% O2 is uncited).
   - Moon target confirmation.
@@ -84,10 +83,9 @@ Flamescope is team Berkelium's NASA Space Apps 2026 entry. The challenge: an SI-
   - The `question_answered` mapping rule.
   - Ranking criteria (currently provisional).
   - The remaining seed documents (8 are candidates).
-  - Whether to keep the sign-in gate for judging.
 
 ## 5. Backend to build
-The site is static, so it can't hold a key, check a password securely, or accept writes. The backend adds a key-holding answer service, real sign-in, and a verification workflow.
+The site is static, so it can't hold a key or accept writes. The backend adds a key-holding answer service, team sign-in for the verification tools, and a verification workflow.
 
 **Suggested stack:** Python with FastAPI, so it imports `scripts/build.py`, `scripts/eval.py`, and `scripts/groq_generate.py` directly. Host it somewhere other than GitHub Pages (Render, Fly.io, Railway, or similar). CORS must allow only `https://enigmahacker.github.io` and `http://localhost:3000`.
 
@@ -96,7 +94,7 @@ The site is static, so it can't hold a key, check a password securely, or accept
 2. **`POST /api/login {username, password}`** returns a session token or cookie.
    - Store passwords server-side with a slow hash (argon2id or bcrypt), never in the repo.
    - Rate-limit attempts per IP and per username.
-   - This replaces the browser-only gate in `site/src/lib/auth.ts`.
+   - Protects team tools only (verification). The public dashboard and deck stay open.
 3. **`GET /api/bundle`** returns the same JSON as `site/src/data/bundle.json`. Reuse `export.py` logic; don't fork it.
 4. **`POST /api/ask {question}`** returns `{supported, answer, citations[], status, problems[], retrieved:{chunks[], runs[]}, model}`.
    - Retrieve with BM25 over chunks (`build.bm25_search`) and over runs (`groq_generate.run_index`). Add EmbeddingGemma hybrid search once access works.
@@ -115,7 +113,6 @@ The site is static, so it can't hold a key, check a password securely, or accept
 **Frontend hook** (small change, in coordination with whoever owns `site/`):
 - Read the backend URL from `process.env.NEXT_PUBLIC_FLAMESCOPE_API` at build time.
 - In `Ask.tsx` `ask()`, when the URL is set, POST to `/api/ask` and render the result with `SiPanel` (tag "SI, live"). Keep the bring-your-own-key path as the fallback.
-- In `site/src/lib/auth.ts`, replace `signIn` with a call to `/api/login`.
 
 **Done when:**
 - `/api/ask` passes the eval set: `python3 -I scripts/eval.py answers.json` reports number accuracy 1.0 and refusal accuracy ≥ 0.8.
@@ -129,5 +126,4 @@ The site is static, so it can't hold a key, check a password securely, or accept
 python3 -I scripts/build.py && python3 -I scripts/eval.py && python3 -I scripts/export.py   # quick data rebuild, no network
 cd site && npm ci && npm run dev                # site at http://localhost:3000/flamescope/
 cd site && npm run build                        # static export in site/out (CI does this on every push)
-node site/scripts/hash-credentials.mjs <user> <pass>   # change the sign-in credentials (writes hashes only)
 ```
