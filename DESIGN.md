@@ -1,65 +1,69 @@
 # Flamescope design system
 
-> **SI flag:** this design system was proposed with SI assistance (Claude, using the frontend-design and design-system skills) and reviewed by the team. The tokens live in `design-tokens.json` and are applied in `web/style.css`.
+> **SI flag:** this design system was proposed by SI (Claude, using the frontend-design, design-system, and design-taste-frontend skills) at the team's request. The tokens are listed in `design-tokens.json` and applied in `site/src/app/globals.css`. The demo deck (`site/public/deck.html`) mirrors them.
 
 ## Subject, audience, job
 - **Subject:** NASA microgravity flame-spread experiments and the cabin atmospheres planned for Moon and Mars crews.
 - **Audience:** mission planners, crew-safety engineers, hackathon judges.
 - **Job:** find, compare, and trust the evidence, and see where it runs out.
 
-## The one bold element: the evidence map
-The hero plots every run that has a recorded oxygen level and pressure, with the Moon and Mars cabin targets drawn as rings.
-- **Dot color encodes oxygen.** It runs from flame blue to soot amber, because the SSCE flames went from blue to orange and grew sootier as oxygen rose (passage C-0004).
-- **Dot fill encodes verification:** hollow means awaiting a check, filled means verified.
-- **A dotted line marks the lowest tested pressure,** so the gap at the lunar atmosphere is visible without reading anything.
-- **The headline is computed from the tables** (`web/app.js`), so it can never contradict them.
+## Direction
+One dark, uncluttered page. The team asked for a site that is "less cluttered" and "immersive", so the eight tabs of the first build became five scrolling sections, and the supporting material folded into panels in the About section.
 
-Everything else stays quiet: neutral chrome, hairline rules, no shadows.
+- **The hero is a flame without gravity.** A canvas animation shows hot gas drifting out evenly in every direction, with no plume. It is drawn by code and labeled "Illustration, not data".
+- **The headline is computed from the tables** (`site/src/components/Dashboard.tsx`), so it can never contradict them.
+- **The evidence map** plots every run with a known oxygen level and pressure against the Moon and Mars cabin targets.
+  - Dot color encodes oxygen, from flame blue to ember, because the SSCE flames went from blue to orange as oxygen rose (passage C-0004).
+  - Dot fill encodes verification: hollow means awaiting a check, filled means verified.
+  - A dotted line marks the lowest tested pressure, so the gap at the lunar atmosphere is visible at a glance.
 
 ## Color
-| Token | Light | Dark | Use |
-|---|---|---|---|
-| paper | `#f2f4f7` | `#0e1730` | page background (cool lab white, deep chamber navy) |
-| surface | `#ffffff` | `#15203d` | panels, inputs |
-| ink | `#18233a` | `#e7ebf4` | text |
-| ink-2 | `#4b5670` | `#a3aec6` | secondary text |
-| rule | `#d6dce6` | `#2a3758` | borders, gridlines |
-| flame | `#2d5bd0` | `#86a6ff` | links, focus, SI answers, low-O2 end of the map |
-| soot | `#d9902a` | `#f0b45a` | high-O2 end of the map, warnings, unverified |
-| ember | `#b0384a` | `#f08a98` | excluded rows, conflicts, uncited targets |
-| verified | `#1e7559` | `#6fd3ab` | rows a second person has checked |
+| Token | Value | Use |
+|---|---|---|
+| void | `#0b0d12` | page background (never pure black) |
+| panel | `#12151c` | panels, inputs |
+| raise | `#181c25` | raised chips, active pills |
+| line | `#242a37` | borders, gridlines |
+| ink | `#e8eaf0` | text |
+| mute | `#9aa1b2` | secondary text |
+| ember | `#e8913a` | the one accent: buttons, section labels, warnings, high-oxygen end of the map |
+| flame | `#5b84e8` | data encoding only: low-oxygen end of the map, SI answer tags |
+| ok | `#4fb38a` | verified |
+| bad | `#e06c7a` | excluded, conflicts, errors |
 
-The map mixes flame into soot in OKLCH, so mid-range oxygen shows as violet rather than grey. The legend gradient uses the same mix.
+The map mixes flame into ember in OKLCH, so mid-range oxygen shows as violet rather than grey.
 
 ## Type
-- **Spectral** (serif) for the headline, insight titles, and reading text. It suits evidence that people read closely.
-- **IBM Plex Sans Condensed** for the interface, tables, IDs, and numbers. It's condensed so that wide run tables fit, and numbers use tabular figures.
-- **Scale:** hero clamps from 26 to 36 px; then 23 / 21 / 17 / 15 / 14 / 12 px. Reading width is about 70 characters.
-- **No all-caps labels, no monospace data labels, no single-word accents.**
+- **Geist** for everything readable. Headlines are medium weight with tight tracking; the hero is 3xl to 5xl, kept smaller than a typical landing-page headline.
+- **Geist Mono** for numbers, run and passage IDs, and table figures.
+- No serif, no all-caps labels. Body text stays under about 65 characters per line.
 
 ## Layout
 ```
-Flamescope   Microgravity fire evidence for crews on the Moon and Mars
-┌───────────────────────────────┬──────────────────────────────┐
-│ Headline (serif, left)        │  Evidence map: O2 × kPa       │
-│ Lede                          │  flame-coloured runs,         │
-│ Ledger: runs, verified, …     │  Moon and Mars target rings   │
-└───────────────────────────────┴──────────────────────────────┘
-Ask | Insights | Rank | Runs | Atmospheres | Sources | Evaluation | About & SI use   (sticky)
+            [ Flamescope | Ask  Evidence  Rank  Runs  About | sign out ]   floating glass pill
+┌──────────────────────────────┬───────────────────────────┐
+│ section label (ember)        │                           │
+│ Headline, left-aligned       │   flame canvas            │
+│ lede, two buttons, ledger    │                           │
+└──────────────────────────────┴───────────────────────────┘
+Ask       command bar, example chips, answers | how it works, own-key panel
+Evidence  evidence map | insight list with decision filter
+Rank      target switch, preview toggle, ranked list | map with the target ringed
+Runs      filters, one fold per platform
+About     fold-out panels: how it works, SI use, NASA data, references, evaluation, demo, limits
 ```
-- Left-aligned throughout.
-- The hero stacks at 900 px and insight rows stack at 700 px.
-- Insights are an evidence list: a status and audience column, then the claim. It is not a card grid.
+- Left-aligned, asymmetric two-column sections that collapse to one column on phones.
+- Lists and dividers instead of card grids. Panels are used only for answers and inputs.
+- The sign-in page is a split screen: the flame on the left, the form on the right.
 
-## Decisions against generic defaults
-- **Dropped the terracotta accent** (`#c2410c`) from the first build. It is the default "warm clay" look and has nothing to do with this subject.
-- **Dropped identical shadowed rounded cards, `·`-joined meta strings, uppercase badges, and monospace ID pills** for the same reason.
-- **Removed a load-in animation on the map dots.** Animating SVG circles left them unpainted in Chromium during testing, so the map is static.
+## Motion
+- Spring easing on reveals, the nav pill, the filter pills, and the citation dialog (Framer Motion).
+- The flame canvas pauses when it is off screen.
+- `prefers-reduced-motion` turns the flame into a still frame and stops the typewriter, shimmer, and breathing dot.
 
 ## Quality floor
-- Visible keyboard focus.
-- Arrow-key navigation between tabs.
-- Dark mode via `prefers-color-scheme`.
-- No horizontal scroll at 375 px (checked on every tab).
-- Text contrast on paper and surface meets WCAG AA for body text.
-- Every interactive control is a real `button`, `input`, or `select`.
+- Visible keyboard focus on every control.
+- Labels above inputs, inline error text, loading skeletons, and written empty states.
+- No horizontal scroll at 375 px (checked on the dashboard and the sign-in page).
+- A grain texture sits on a fixed, non-interactive layer, so scrolling never repaints it.
+- No NASA logos or branding.

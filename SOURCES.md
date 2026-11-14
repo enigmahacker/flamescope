@@ -71,6 +71,8 @@ These are candidates for the next round of seed documents.
 ## 3. Models and AI services
 - **Claude by Anthropic, via Claude Code** (SI): generated the code, the extraction, the drafts, and the documentation. https://www.anthropic.com/claude and https://claude.com/claude-code
 - **Groq API** (LLM inference for the answers): https://api.groq.com/openai/v1. Docs: https://console.groq.com/docs. Model: `openai/gpt-oss-20b` (set in `config.yaml`).
+  - Model list: https://console.groq.com/docs/models
+  - Deprecations (why the Llama model was replaced): https://console.groq.com/docs/deprecations
 - **google/embeddinggemma-300m** (chosen embedding model; access pending): https://huggingface.co/google/embeddinggemma-300m. Pinned revision `57c266a740f537b4dc058e1b0cda161fd15afa75`.
 - **BAAI/bge-multilingual-gemma2** (considered, not chosen): https://huggingface.co/BAAI/bge-multilingual-gemma2
 
@@ -82,8 +84,14 @@ These are candidates for the next round of seed documents.
 - **NumPy:** https://numpy.org
 - **PyYAML:** https://pyyaml.org
 - **uv** (virtual environment): https://github.com/astral-sh/uv
-- **Spectral** typeface: https://fonts.google.com/specimen/Spectral
-- **IBM Plex Sans Condensed** typeface: https://fonts.google.com/specimen/IBM+Plex+Sans+Condensed
+- **Next.js** (static export): https://nextjs.org
+- **React:** https://react.dev
+- **Tailwind CSS:** https://tailwindcss.com
+- **Framer Motion:** https://www.framer.com/motion/
+- **Phosphor Icons:** https://phosphoricons.com
+- **Geist and Geist Mono** typefaces: https://vercel.com/font (the deck loads them from https://fonts.google.com/specimen/Geist)
+- **Web Crypto API** (PBKDF2 for the sign-in): https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/deriveBits
+- **Node.js** (site build): https://nodejs.org
 - **GitHub Pages:** https://pages.github.com
 - **GitHub Actions** used to deploy:
   - https://github.com/actions/checkout

@@ -1,31 +1,30 @@
 {
-  "$description": "Flamescope design tokens. Source of truth for web/style.css :root. SI-assisted: proposed with Claude (frontend-design and design-system skills), reviewed by the team.",
+  "$description": "Flamescope design tokens (dark theme). Applied as Tailwind @theme values in site/src/app/globals.css and mirrored in site/public/deck.html. SI-generated: proposed by Claude (frontend-design, design-system, and design-taste-frontend skills) at the team's request.",
   "color": {
-    "light": {
-      "paper": "#f2f4f7", "surface": "#ffffff", "ink": "#18233a", "ink-2": "#4b5670", "rule": "#d6dce6",
-      "flame": "#2d5bd0", "soot": "#d9902a", "ember": "#b0384a", "verified": "#1e7559",
-      "flame-wash": "#e6ecfb", "soot-wash": "#fbf0de", "ember-wash": "#f8e4e7", "verified-wash": "#e0f1ea"
-    },
-    "dark": {
-      "paper": "#0e1730", "surface": "#15203d", "ink": "#e7ebf4", "ink-2": "#a3aec6", "rule": "#2a3758",
-      "flame": "#86a6ff", "soot": "#f0b45a", "ember": "#f08a98", "verified": "#6fd3ab",
-      "flame-wash": "#1c2b57", "soot-wash": "#3a2c14", "ember-wash": "#3d1d27", "verified-wash": "#133a2f"
-    },
+    "void": "#0b0d12",
+    "panel": "#12151c",
+    "raise": "#181c25",
+    "line": "#242a37",
+    "ink": "#e8eaf0",
+    "mute": "#9aa1b2",
+    "ember": "#e8913a",
+    "flame": "#5b84e8",
+    "ok": "#4fb38a",
+    "bad": "#e06c7a",
     "semantics": {
-      "flame": "links, focus, SI answers, low-oxygen end of the evidence map",
-      "soot": "high-oxygen end of the evidence map, warnings, unverified",
-      "ember": "excluded rows, conflicts, uncited targets",
-      "verified": "rows checked against source by a second person"
+      "ember": "the one accent: buttons, section labels, warnings, high-oxygen end of the evidence map",
+      "flame": "data encoding only: low-oxygen end of the evidence map, SI answer tags",
+      "ok": "rows checked against source by a second person",
+      "bad": "excluded rows, conflicts, errors"
     },
-    "map-scale": "color-mix(in oklch, flame, soot) by oxygen fraction between the lowest and highest O2 in eligible runs"
+    "map-scale": "color-mix(in oklch, flame, ember) by oxygen fraction between the lowest and highest O2 in eligible runs"
   },
   "font": {
-    "serif": "Spectral (400, 500, 600) for headlines and reading text",
-    "sans": "IBM Plex Sans Condensed (400, 500, 600) for UI, tables, IDs, numbers (tabular-nums)"
+    "sans": "Geist (400, 500, 600) for all reading text and headlines",
+    "mono": "Geist Mono (400, 500) for numbers, IDs, and table figures"
   },
-  "type-scale-px": { "hero": "clamp(26, 2.6vw, 36)", "card-title": 23, "section": 21, "body": 17, "ui": 15, "small": 14, "chart": 12 },
-  "space-px": { "s1": 4, "s2": 8, "s3": 12, "s4": 16, "s5": 24, "s6": 32, "s7": 48 },
-  "radius-px": { "control": 4, "panel": 6, "tag": 3 },
-  "breakpoints-px": { "stack-hero": 900, "stack-cards": 700, "phone": 600 },
-  "max-width-px": { "page": 1240, "reading": 900 }
+  "type": { "hero": "text-3xl to md:text-5xl, tracking-tighter", "section": "text-3xl to md:text-5xl", "body": "text-base, leading-relaxed, max 65ch", "small": "text-sm and text-xs" },
+  "radius": { "panel": "rounded-2xl", "control": "rounded-lg", "pill": "rounded-full" },
+  "motion": { "easing": "spring, stiffness 100, damping 20", "reduced-motion": "still flame frame; typewriter, shimmer, and breathing dot stop" },
+  "layout": { "max-width": "1400px", "hero-min-height": "100dvh", "breakpoints": "Tailwind md (768px) and lg (1024px)" }
 }

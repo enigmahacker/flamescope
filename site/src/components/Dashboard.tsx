@@ -327,7 +327,7 @@ export default function Dashboard() {
       </main>
       <footer className="mx-auto max-w-[1400px] border-t border-line px-4 py-10 text-sm text-mute md:px-10">
         <div className="flex flex-wrap justify-between gap-4">
-          <p className="max-w-[60ch]">Flamescope is an independent NASA Space Apps 2026 project built from public NASA NTRS reports and PSI datasets. It is not an official NASA product. Data snapshot {DATA.generated}.</p>
+          <p className="max-w-[60ch]">Built by team Berkelium: Aarush Koolwal, Vihaan Bafna, Aryamann Patne, Gadikota Sudeep Reddy. Flamescope is an independent NASA Space Apps 2026 project built from public NASA NTRS reports and PSI datasets. It is not an official NASA product. Data snapshot {DATA.generated}.</p>
           <p className="flex gap-5"><a className="hover:text-ink" href={`${BASE}/deck.html`}>Demo deck</a><a className="hover:text-ink" href={REPO}>Source code</a></p>
         </div>
       </footer>
