@@ -68,7 +68,7 @@ Flamescope is team Berkelium's NASA Space Apps 2026 entry. The challenge: an SI-
 - **Runs:** 275 in total.
   - 11 from paper text: shuttle SSCE thin and thick fuel, all `unverified`.
   - 264 from PSI tables: BASS, BASS-II, Saffire I, II, and III. All are excluded because the tables give no pressure.
-- **Verified runs:** 0, so the ranked view is empty.
+- **Verified runs:** 11 (FS-0001 to FS-0011), re-checked against the two papers by SI on 2026-11-14 and logged in `data/verification_log.csv`. This is not independent: the same agent extracted them, so each carries the flag `verified_by_SI_recheck_not_independent`. A human second check is still needed to meet rule 5. The other 264 runs are excluded for missing pressure.
 - **Passages:** 28 chunks, 10 manifest sources.
 - **Eval baseline (BM25):** hit rate 0.867, off-topic refusal 0.8.
 - **Groq model:** `openai/gpt-oss-20b`, with `max_tokens` 1500 and `reasoning_effort` low. Groq retired the Llama models for free and developer tiers on 2026-08-16.

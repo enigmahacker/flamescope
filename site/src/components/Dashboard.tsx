@@ -297,7 +297,7 @@ function About() {
         </Fold>
         <Fold title="Known limits">
           <ul className="list-disc space-y-2 pl-5">
-            <li>No run is verified yet, so the ranking is empty until a second person checks the numbers.</li>
+            <li>The 11 ranked runs were re-checked against their papers by SI, the same tool that extracted them, so a human second check is still pending.</li>
             <li>The PSI tables report no cabin pressure, so those runs never enter the ranking.</li>
             <li>No partial-gravity runs are in the corpus yet.</li>
             <li>The Mars target has no citation, and the ranking criteria are provisional.</li>

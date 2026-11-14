@@ -2,30 +2,333 @@
   "version": "2026-11-14",
   "notes": "Gold answers drafted with AI assistance from runs.csv and chunks.jsonl, and must be re-checked when a run changes verification_status. type: answer = must answer with citations; unsupported = sources do not support a number or claim, so the system must say so; off_topic = must refuse. Numbers in gold answers come only from runs.csv or atmosphere_targets.csv fields.",
   "questions": [
-    {"id": "Q01", "type": "answer", "question": "What oxygen fraction did the USML-1 solid surface experiment use?", "gold_answer": "35% oxygen by volume (balance nitrogen).", "gold_numbers": ["35"], "gold_run_ids": ["FS-0001"], "gold_chunk_ids": ["C-0001"]},
-    {"id": "Q02", "type": "answer", "question": "What total pressure was the USML-1 SSCE test run at?", "gold_answer": "1.0 atm, which is 101.325 kPa.", "gold_numbers": ["101.325"], "gold_run_ids": ["FS-0001"], "gold_chunk_ids": ["C-0001"]},
-    {"id": "Q03", "type": "answer", "question": "What leading-edge flame spread rate was measured on USML-1?", "gold_answer": "0.92 mm/s (reported as 0.092 cm/s).", "gold_numbers": ["0.92"], "gold_run_ids": ["FS-0001"], "gold_chunk_ids": ["C-0003"]},
-    {"id": "Q04", "type": "answer", "question": "What spread rate did SSCE report for thin cellulose at 50% oxygen and 2.0 atm?", "gold_answer": "5.47 mm/s at 202.650 kPa.", "gold_numbers": ["5.47", "202.650"], "gold_run_ids": ["FS-0005"], "gold_chunk_ids": ["C-0003"]},
-    {"id": "Q05", "type": "answer", "question": "How does flame spread rate over thin cellulose change with oxygen and pressure in the SSCE flights?", "gold_answer": "It increases with both higher oxygen content and higher pressure.", "gold_numbers": [], "gold_run_ids": ["FS-0001", "FS-0002", "FS-0003", "FS-0004", "FS-0005"], "gold_chunk_ids": ["C-0004", "C-0003"]},
-    {"id": "Q06", "type": "answer", "question": "What fuel sample was burned in the USML-1 solid surface combustion experiment?", "gold_answer": "Whatman #1 filter paper, a thin cellulosic fuel.", "gold_numbers": [], "gold_run_ids": ["FS-0001"], "gold_chunk_ids": ["C-0002"]},
-    {"id": "Q07", "type": "answer", "question": "Which oxygen and pressure conditions were flown in the SSCE thick PMMA experiments?", "gold_answer": "70% O2 at 101.325 kPa (STS-54), 50% O2 at 101.325 kPa (STS-63), and 50% O2 at 202.650 kPa (STS-64).", "gold_numbers": ["70", "50", "101.325", "202.650"], "gold_run_ids": ["FS-0006", "FS-0007", "FS-0008", "FS-0009", "FS-0010", "FS-0011"], "gold_chunk_ids": ["C-0005"]},
-    {"id": "Q08", "type": "answer", "question": "Did flame spread over thick PMMA reach a steady rate in microgravity?", "gold_answer": "No. The spread rate slowly decreased with time.", "gold_numbers": [], "gold_run_ids": ["FS-0006", "FS-0008", "FS-0010"], "gold_chunk_ids": ["C-0007"]},
-    {"id": "Q09", "type": "answer", "question": "How many PMMA samples were burned on each SSCE thick-fuel shuttle flight?", "gold_answer": "Two samples per flight.", "gold_numbers": [], "gold_run_ids": ["FS-0006", "FS-0007"], "gold_chunk_ids": ["C-0005"]},
-    {"id": "Q10", "type": "unsupported", "question": "What was the numeric flame spread rate for the STS-63 thick PMMA runs?", "gold_answer": "Not supported: the source shows these spread rates only in a figure, so runs.csv leaves spread_rate_mm_s blank.", "gold_numbers": [], "gold_run_ids": ["FS-0008", "FS-0009"], "gold_chunk_ids": []},
-    {"id": "Q11", "type": "answer", "question": "Did the Spread Across Liquids experiments report spread that was steadier in microgravity?", "gold_answer": "Yes. Flame spread in microgravity was much slower and steadier than in 1 g, where it pulsated.", "gold_numbers": [], "gold_run_ids": [], "gold_chunk_ids": ["C-0008"]},
-    {"id": "Q12", "type": "answer", "question": "What liquid fuel was used in the Spread Across Liquids sounding rocket flights?", "gold_answer": "1-butanol.", "gold_numbers": [], "gold_run_ids": [], "gold_chunk_ids": ["C-0008"]},
-    {"id": "Q13", "type": "answer", "question": "What platform did the Spread Across Liquids microgravity experiments fly on?", "gold_answer": "Sounding rockets.", "gold_numbers": [], "gold_run_ids": [], "gold_chunk_ids": ["C-0008"]},
-    {"id": "Q14", "type": "unsupported", "question": "Which runs in the table test partial gravity?", "gold_answer": "None. Every run in runs.csv records gravity_condition microgravity; no partial-gravity run is in the table.", "gold_numbers": [], "gold_run_ids": [], "gold_chunk_ids": []},
-    {"id": "Q15", "type": "answer", "question": "What cabin atmosphere is recommended for a lunar surface habitat?", "gold_answer": "8.2 psia (56.537 kPa) with 34% oxygen, raised from an earlier 8.0 psia / 32% recommendation. Pending team lead confirmation.", "gold_numbers": ["56.537", "34"], "gold_run_ids": [], "gold_chunk_ids": ["C-0009", "C-0010"]},
-    {"id": "Q16", "type": "answer", "question": "What microgravity spread rate did Saffire-II measure for the cotton-fiberglass (SIBAL) sample?", "gold_answer": "2.1 mm/s (sample 2-5, concurrent flow at 0.2 m/s). The run is unverified and excluded from ranking because the PSI table gives no pressure.", "gold_numbers": ["2.1", "0.2"], "gold_run_ids": ["FS-1258"], "gold_chunk_ids": ["C-0020"]},
-    {"id": "Q17", "type": "answer", "question": "Did the silicone samples spread a flame in Saffire-II?", "gold_answer": "No. The table lists microgravity burn length as about zero for all four silicone samples.", "gold_numbers": [], "gold_run_ids": ["FS-1254", "FS-1255", "FS-1256", "FS-1257"], "gold_chunk_ids": []},
-    {"id": "Q18", "type": "answer", "question": "What air flow speed was used in Saffire-I?", "gold_answer": "0.2 m/s (reported as 20 cm/s).", "gold_numbers": ["0.2"], "gold_run_ids": ["FS-1252", "FS-1253"], "gold_chunk_ids": []},
-    {"id": "Q19", "type": "answer", "question": "What does the BASS-II investigation study?", "gold_answer": "Ignition, flame growth, flame spread, and extinction limits of solid fuels in low-velocity forced flow in microgravity.", "gold_numbers": [], "gold_run_ids": [], "gold_chunk_ids": ["C-0011"]},
-    {"id": "Q20", "type": "unsupported", "question": "Which verified run is the highest fire risk for a Moon habitat atmosphere?", "gold_answer": "Not supported yet: no run is verified, so the ranked view is empty.", "gold_numbers": [], "gold_run_ids": [], "gold_chunk_ids": []},
-    {"id": "X01", "type": "off_topic", "question": "What is the best pizza topping?", "gold_answer": "REFUSE", "gold_numbers": [], "gold_run_ids": [], "gold_chunk_ids": []},
-    {"id": "X02", "type": "off_topic", "question": "Who won the 1998 football world cup?", "gold_answer": "REFUSE", "gold_numbers": [], "gold_run_ids": [], "gold_chunk_ids": []},
-    {"id": "X03", "type": "off_topic", "question": "What will the stock market do next week?", "gold_answer": "REFUSE", "gold_numbers": [], "gold_run_ids": [], "gold_chunk_ids": []},
-    {"id": "X04", "type": "off_topic", "question": "Write me a poem about autumn leaves.", "gold_answer": "REFUSE", "gold_numbers": [], "gold_run_ids": [], "gold_chunk_ids": []},
-    {"id": "X05", "type": "off_topic", "question": "What is the weather in Paris today?", "gold_answer": "REFUSE", "gold_numbers": [], "gold_run_ids": [], "gold_chunk_ids": []}
+    {
+      "id": "Q01",
+      "type": "answer",
+      "question": "What oxygen fraction did the USML-1 solid surface experiment use?",
+      "gold_answer": "35% oxygen by volume (balance nitrogen).",
+      "gold_numbers": [
+        "35"
+      ],
+      "gold_run_ids": [
+        "FS-0001"
+      ],
+      "gold_chunk_ids": [
+        "C-0001"
+      ]
+    },
+    {
+      "id": "Q02",
+      "type": "answer",
+      "question": "What total pressure was the USML-1 SSCE test run at?",
+      "gold_answer": "1.0 atm, which is 101.325 kPa.",
+      "gold_numbers": [
+        "101.325"
+      ],
+      "gold_run_ids": [
+        "FS-0001"
+      ],
+      "gold_chunk_ids": [
+        "C-0001"
+      ]
+    },
+    {
+      "id": "Q03",
+      "type": "answer",
+      "question": "What leading-edge flame spread rate was measured on USML-1?",
+      "gold_answer": "0.92 mm/s (reported as 0.092 cm/s).",
+      "gold_numbers": [
+        "0.92"
+      ],
+      "gold_run_ids": [
+        "FS-0001"
+      ],
+      "gold_chunk_ids": [
+        "C-0003"
+      ]
+    },
+    {
+      "id": "Q04",
+      "type": "answer",
+      "question": "What spread rate did SSCE report for thin cellulose at 50% oxygen and 2.0 atm?",
+      "gold_answer": "5.47 mm/s at 202.650 kPa.",
+      "gold_numbers": [
+        "5.47",
+        "202.650"
+      ],
+      "gold_run_ids": [
+        "FS-0005"
+      ],
+      "gold_chunk_ids": [
+        "C-0003"
+      ]
+    },
+    {
+      "id": "Q05",
+      "type": "answer",
+      "question": "How does flame spread rate over thin cellulose change with oxygen and pressure in the SSCE flights?",
+      "gold_answer": "It increases with both higher oxygen content and higher pressure.",
+      "gold_numbers": [],
+      "gold_run_ids": [
+        "FS-0001",
+        "FS-0002",
+        "FS-0003",
+        "FS-0004",
+        "FS-0005"
+      ],
+      "gold_chunk_ids": [
+        "C-0004",
+        "C-0003"
+      ]
+    },
+    {
+      "id": "Q06",
+      "type": "answer",
+      "question": "What fuel sample was burned in the USML-1 solid surface combustion experiment?",
+      "gold_answer": "Whatman #1 filter paper, a thin cellulosic fuel.",
+      "gold_numbers": [],
+      "gold_run_ids": [
+        "FS-0001"
+      ],
+      "gold_chunk_ids": [
+        "C-0002"
+      ]
+    },
+    {
+      "id": "Q07",
+      "type": "answer",
+      "question": "Which oxygen and pressure conditions were flown in the SSCE thick PMMA experiments?",
+      "gold_answer": "70% O2 at 101.325 kPa (STS-54), 50% O2 at 101.325 kPa (STS-63), and 50% O2 at 202.650 kPa (STS-64).",
+      "gold_numbers": [
+        "70",
+        "50",
+        "101.325",
+        "202.650"
+      ],
+      "gold_run_ids": [
+        "FS-0006",
+        "FS-0007",
+        "FS-0008",
+        "FS-0009",
+        "FS-0010",
+        "FS-0011"
+      ],
+      "gold_chunk_ids": [
+        "C-0005"
+      ]
+    },
+    {
+      "id": "Q08",
+      "type": "answer",
+      "question": "Did flame spread over thick PMMA reach a steady rate in microgravity?",
+      "gold_answer": "No. The spread rate slowly decreased with time.",
+      "gold_numbers": [],
+      "gold_run_ids": [
+        "FS-0006",
+        "FS-0008",
+        "FS-0010"
+      ],
+      "gold_chunk_ids": [
+        "C-0007"
+      ]
+    },
+    {
+      "id": "Q09",
+      "type": "answer",
+      "question": "How many PMMA samples were burned on each SSCE thick-fuel shuttle flight?",
+      "gold_answer": "Two samples per flight.",
+      "gold_numbers": [],
+      "gold_run_ids": [
+        "FS-0006",
+        "FS-0007"
+      ],
+      "gold_chunk_ids": [
+        "C-0005"
+      ]
+    },
+    {
+      "id": "Q10",
+      "type": "unsupported",
+      "question": "What was the numeric flame spread rate for the STS-63 thick PMMA runs?",
+      "gold_answer": "Not supported: the source shows these spread rates only in a figure, so runs.csv leaves spread_rate_mm_s blank.",
+      "gold_numbers": [],
+      "gold_run_ids": [
+        "FS-0008",
+        "FS-0009"
+      ],
+      "gold_chunk_ids": []
+    },
+    {
+      "id": "Q11",
+      "type": "answer",
+      "question": "Did the Spread Across Liquids experiments report spread that was steadier in microgravity?",
+      "gold_answer": "Yes. Flame spread in microgravity was much slower and steadier than in 1 g, where it pulsated.",
+      "gold_numbers": [],
+      "gold_run_ids": [],
+      "gold_chunk_ids": [
+        "C-0008"
+      ]
+    },
+    {
+      "id": "Q12",
+      "type": "answer",
+      "question": "What liquid fuel was used in the Spread Across Liquids sounding rocket flights?",
+      "gold_answer": "1-butanol.",
+      "gold_numbers": [],
+      "gold_run_ids": [],
+      "gold_chunk_ids": [
+        "C-0008"
+      ]
+    },
+    {
+      "id": "Q13",
+      "type": "answer",
+      "question": "What platform did the Spread Across Liquids microgravity experiments fly on?",
+      "gold_answer": "Sounding rockets.",
+      "gold_numbers": [],
+      "gold_run_ids": [],
+      "gold_chunk_ids": [
+        "C-0008"
+      ]
+    },
+    {
+      "id": "Q14",
+      "type": "unsupported",
+      "question": "Which runs in the table test partial gravity?",
+      "gold_answer": "None. Every run in runs.csv records gravity_condition microgravity; no partial-gravity run is in the table.",
+      "gold_numbers": [],
+      "gold_run_ids": [],
+      "gold_chunk_ids": []
+    },
+    {
+      "id": "Q15",
+      "type": "answer",
+      "question": "What cabin atmosphere is recommended for a lunar surface habitat?",
+      "gold_answer": "8.2 psia (56.537 kPa) with 34% oxygen, raised from an earlier 8.0 psia / 32% recommendation. Pending team lead confirmation.",
+      "gold_numbers": [
+        "56.537",
+        "34"
+      ],
+      "gold_run_ids": [],
+      "gold_chunk_ids": [
+        "C-0009",
+        "C-0010"
+      ]
+    },
+    {
+      "id": "Q16",
+      "type": "answer",
+      "question": "What microgravity spread rate did Saffire-II measure for the cotton-fiberglass (SIBAL) sample?",
+      "gold_answer": "2.1 mm/s (sample 2-5, concurrent flow at 0.2 m/s). The run is unverified and excluded from ranking because the PSI table gives no pressure.",
+      "gold_numbers": [
+        "2.1",
+        "0.2"
+      ],
+      "gold_run_ids": [
+        "FS-1258"
+      ],
+      "gold_chunk_ids": [
+        "C-0020"
+      ]
+    },
+    {
+      "id": "Q17",
+      "type": "answer",
+      "question": "Did the silicone samples spread a flame in Saffire-II?",
+      "gold_answer": "No. The table lists microgravity burn length as about zero for all four silicone samples.",
+      "gold_numbers": [],
+      "gold_run_ids": [
+        "FS-1254",
+        "FS-1255",
+        "FS-1256",
+        "FS-1257"
+      ],
+      "gold_chunk_ids": []
+    },
+    {
+      "id": "Q18",
+      "type": "answer",
+      "question": "What air flow speed was used in Saffire-I?",
+      "gold_answer": "0.2 m/s (reported as 20 cm/s).",
+      "gold_numbers": [
+        "0.2"
+      ],
+      "gold_run_ids": [
+        "FS-1252",
+        "FS-1253"
+      ],
+      "gold_chunk_ids": []
+    },
+    {
+      "id": "Q19",
+      "type": "answer",
+      "question": "What does the BASS-II investigation study?",
+      "gold_answer": "Ignition, flame growth, flame spread, and extinction limits of solid fuels in low-velocity forced flow in microgravity.",
+      "gold_numbers": [],
+      "gold_run_ids": [],
+      "gold_chunk_ids": [
+        "C-0011"
+      ]
+    },
+    {
+      "id": "Q20",
+      "type": "unsupported",
+      "question": "Which verified run is the highest fire risk for a Moon habitat atmosphere?",
+      "gold_answer": "Not supported: no run was flown at lunar habitat pressure, so fire risk at 56.537 kPa cannot be ranked. The closest verified run is FS-0001 (35% O2 at 101.325 kPa).",
+      "gold_numbers": [
+        "56.537",
+        "35",
+        "101.325"
+      ],
+      "gold_run_ids": [
+        "FS-0001"
+      ],
+      "gold_chunk_ids": []
+    },
+    {
+      "id": "X01",
+      "type": "off_topic",
+      "question": "What is the best pizza topping?",
+      "gold_answer": "REFUSE",
+      "gold_numbers": [],
+      "gold_run_ids": [],
+      "gold_chunk_ids": []
+    },
+    {
+      "id": "X02",
+      "type": "off_topic",
+      "question": "Who won the 1998 football world cup?",
+      "gold_answer": "REFUSE",
+      "gold_numbers": [],
+      "gold_run_ids": [],
+      "gold_chunk_ids": []
+    },
+    {
+      "id": "X03",
+      "type": "off_topic",
+      "question": "What will the stock market do next week?",
+      "gold_answer": "REFUSE",
+      "gold_numbers": [],
+      "gold_run_ids": [],
+      "gold_chunk_ids": []
+    },
+    {
+      "id": "X04",
+      "type": "off_topic",
+      "question": "Write me a poem about autumn leaves.",
+      "gold_answer": "REFUSE",
+      "gold_numbers": [],
+      "gold_run_ids": [],
+      "gold_chunk_ids": []
+    },
+    {
+      "id": "X05",
+      "type": "off_topic",
+      "question": "What is the weather in Paris today?",
+      "gold_answer": "REFUSE",
+      "gold_numbers": [],
+      "gold_run_ids": [],
+      "gold_chunk_ids": []
+    }
   ]
 }

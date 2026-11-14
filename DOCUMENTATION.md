@@ -175,7 +175,7 @@ Then open http://localhost:3000/flamescope/. For a production build, run `npm ru
 - Number, citation, and refusal accuracy for Groq answers are scored after step 4b runs.
 
 ## 9. Known gaps and open decisions
-- **Verification:** no run is verified yet, so the ranked view is empty. A second person must check FS-0001 to FS-0011 against the PDFs.
+- **Verification:** FS-0001 to FS-0011 were re-checked against the papers by SI (Claude) on 2026-11-14 and are marked verified (log: `data/verification_log.csv`). It was not independent, because the same agent extracted them, and each row carries the flag `verified_by_SI_recheck_not_independent`. The brief asks for a second person, so a human check is still needed.
 - **Pressure:** the 264 PSI-table runs have no pressure, so they are excluded.
 - **Atmosphere targets:** the Mars target (101 kPa, 21% O2) has no citation. The Moon target needs team lead confirmation.
 - **Seed list:** the full seed list of 10 documents was never provided; 8 manifest entries are candidates.

@@ -92,7 +92,7 @@ Every push to `main` triggers `.github/workflows/pages.yml`, which builds `site/
 
 ## Known gaps
 
-- No run is verified yet, so the ranked view is empty.
+- The 11 paper-text runs (FS-0001 to FS-0011) were re-checked against the papers on 2026-11-14 by SI (the same agent that extracted them), so they are marked verified but not independently. The brief asks for a second person; the log is `data/verification_log.csv`. The 264 PSI runs are unchecked and excluded.
 - The PSI tables report no pressure, so those runs are excluded from ranking.
 - The Mars target has no citation.
 - Offline Groq answers are not generated yet; no key is set on the build machine.
