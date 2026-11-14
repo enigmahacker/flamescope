@@ -93,7 +93,8 @@ def validate(ans, runs, chunks, atm):
     problems = [f"unknown citation {c}" for c in cites if c not in runs and c not in chunks and c not in atm]
     if not cites:
         problems.append("no citations")
-    ok, bad = ev.numbers_ok(ID.sub("", ans.get("answer", "")), cites, runs, atm)
+    linked = [r for c in cites if c in chunks for r in chunks[c]["run_ids"]]  # a cited passage vouches for the runs it reports
+    ok, bad = ev.numbers_ok(ID.sub("", ans.get("answer", "")), cites + linked, runs, atm)
     if not ok:
         problems.append(f"numbers not in cited rows: {bad}")
     return ("validated" if not problems else "rejected"), problems

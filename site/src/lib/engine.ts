@@ -77,9 +77,12 @@ export function checkAnswer(a: Answer): Answer {
   const problems = cites.filter((c) => !runs[c] && !chunks[c] && !atm[c]).map((c) => `unknown citation ${c}`);
   if (!cites.length) problems.push("no citations");
   const allowed = new Set<string>();
-  for (const rec of [...cites.filter((c) => runs[c]).map((c) => runs[c]), ...B.atmosphere])
+  // a cited passage vouches for the runs it reports (its run_ids)
+  const runIds = new Set([...cites.filter((c) => runs[c]), ...cites.flatMap((c) => chunks[c]?.run_ids ?? [])]);
+  for (const rec of [...[...runIds].map((c) => runs[c]), ...B.atmosphere])
     for (const v of Object.values(rec)) for (const n of String(v ?? "").match(NUM) ?? []) allowed.add(n);
-  const bad = (String(a.answer).replace(IDS, "").match(NUM) ?? []).filter((n) => !allowed.has(n));
+  // mission and run names such as USML-1 or STS-50 are not measurements
+  const bad = (String(a.answer).replace(IDS, "").replace(/\b[A-Za-z]+-\d+[A-Za-z]*\b/g, "").match(NUM) ?? []).filter((n) => !allowed.has(n));
   if (bad.length) problems.push(`numbers not in cited rows: ${bad.join(", ")}`);
   return { ...a, citations: cites, status: problems.length ? "rejected" : "validated", problems };
 }

@@ -34,8 +34,11 @@ def allowed_numbers(cited, runs, atm):
     return vals
 
 
+DESIGNATOR = re.compile(r"\b[A-Za-z]+-\d+[A-Za-z]*\b")  # mission and run names such as USML-1, STS-50, FS-0001 are not measurements
+
+
 def numbers_ok(text, cited, runs, atm):
-    bad = [n for n in NUM.findall(text) if n not in allowed_numbers(cited, runs, atm)]
+    bad = [n for n in NUM.findall(DESIGNATOR.sub("", text)) if n not in allowed_numbers(cited, runs, atm)]
     return not bad, bad
 
 
@@ -96,6 +99,7 @@ if __name__ == "__main__":
     check_gold(runs, atm, chunks, qs)
     assert numbers_ok("0.92 mm/s at 101.325 kPa", ["FS-0001"], runs, atm)[0]
     assert not numbers_ok("0.95 mm/s", ["FS-0001"], runs, atm)[0], "number check must reject unknown numbers"
+    assert numbers_ok("USML-1 on STS-50 used 35% oxygen", ["FS-0001"], runs, atm)[0], "mission names are not numbers"
     report = score_retrieval(qs)
     if len(sys.argv) > 1:
         report["answers"] = score_answers(sys.argv[1], runs, atm, qs)
