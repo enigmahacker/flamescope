@@ -5,12 +5,5 @@
 __pycache__/
 .claude/
 .DS_Store
-# NTRS flags these two papers MAY_INCLUDE_COPYRIGHT_MATERIAL: keep full text local, publish short excerpts only
-raw/19950007798.txt
-raw/19970020608.txt
-raw/*.pdf
 # large / regenerable
 data/embeddings.npy
-raw/ntrs_20210011385.txt
-raw/ntrs_20210011385.pdf
-raw/psi_docs/
