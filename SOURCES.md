@@ -54,6 +54,8 @@ PSI API endpoints:
 - PSI database guide (PDF): https://assets.science.nasa.gov/content/dam/science/bps/bps-general/bps-data_osdr_psi/Complete_PSI_Database_Guide.pdf
 - NASA privacy policy and important notices: https://www.nasa.gov/nasa-web-privacy-policy-and-important-notices/
 
+- **NTRS 20210011385 (D-0011)**, 2021: *Burning and Suppression of Solids-II (BASS-II) Summary Report*. Used for the BASS-II test conditions (101 kPa, 21% O2 for the downward experiments). Record: https://ntrs.nasa.gov/citations/20210011385 · PDF: https://ntrs.nasa.gov/api/citations/20210011385/downloads/TM-20210011385.pdf
+
 ## 2. Found in searches, not ingested
 These are candidates for the next round of seed documents.
 

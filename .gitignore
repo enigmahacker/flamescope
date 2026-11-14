@@ -11,3 +11,6 @@ raw/19970020608.txt
 raw/*.pdf
 # large / regenerable
 data/embeddings.npy
+raw/ntrs_20210011385.txt
+raw/ntrs_20210011385.pdf
+raw/psi_docs/

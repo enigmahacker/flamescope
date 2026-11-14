@@ -109,6 +109,7 @@ EXCERPTS = [
 
 # Public-use / CC0 sources: full abstract or PSI description text is stored.
 NTRS_ABSTRACTS = {"D-0003": "19990054039", "D-0004": "20130013505"}
+PRESSURE_SENTENCE = "The downward experiments were performed in the atmospheric condition (pressure 101 kPa, O2 level 21 percent)."  # verbatim, NTRS 20210011385 PDF text
 PSI = {"D-0005": "PSI-25", "D-0006": "PSI-26", "D-0007": "PSI-98", "D-0008": "PSI-99", "D-0009": "PSI-100", "D-0010": "PSI-62"}
 PSI_FIELDS = ["objective", "approach", "hypothesis"]
 
@@ -124,6 +125,10 @@ def build_chunks(manifest):
         for fld in PSI_FIELDS:
             if (j.get(fld) or "").strip():
                 raw.append((doc, fld, f"PSI {fld} field", [], j[fld].strip(), False))
+    # BASS-II summary report (NTRS 20210011385, PSI-25 dataset). Added after the PSI items so earlier chunk IDs stay stable.
+    j = json.loads((RAW / "20210011385.json").read_text(encoding="utf-8"))
+    raw.append(("D-0011", "abstract", "NTRS abstract", [], j["abstract"].strip(), False))
+    raw.append(("D-0011", "results", "Summary report, test conditions for the downward experiments (quoted from the PDF text)", [], PRESSURE_SENTENCE, False))
     out = []
     for doc, sec, loc, rids, text, ai in raw:
         parts = window(text)
