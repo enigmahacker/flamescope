@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Flamescope</title>
+  <meta name="description" content="Flamescope: a cited, verifiable dashboard of NASA microgravity flame-spread experiments for Moon and Mars crew fire safety.">
+  <meta name="ai-assistance" content="Code, data extraction, insight cards and answers were produced with super intelligence (SI) assistance: Claude (Anthropic) for code, extraction and drafting; Groq-hosted LLM for grounded answers. See the About tab.">
+  <meta name="generator" content="Flamescope pipeline (SI-assisted)">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="top">
+    <div class="brand">
+      <svg class="mark" viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3c3 6 9 8 9 16a9 9 0 0 1-18 0c0-5 3-7 4-11 2 3 3 4 5 4-1-4-1-6 0-9z"/></svg>
+      <div>
+        <h1>Flamescope</h1>
+        <p class="sub">How fire behaves off Earth, from decades of microgravity experiments: summarized, ranked and interpreted for crews on the Moon and Mars. Every claim links to a run or a source passage.</p>
+      </div>
+    </div>
+    <dl class="kpis" id="kpis"></dl>
+  </header>
+
+  <nav class="tabs" role="tablist" aria-label="Sections">
+    <button role="tab" aria-selected="true" aria-controls="p-ask" id="t-ask">Ask</button>
+    <button role="tab" aria-selected="false" aria-controls="p-insights" id="t-insights">Insights</button>
+    <button role="tab" aria-selected="false" aria-controls="p-rank" id="t-rank">Rank</button>
+    <button role="tab" aria-selected="false" aria-controls="p-runs" id="t-runs">Runs</button>
+    <button role="tab" aria-selected="false" aria-controls="p-atm" id="t-atm">Atmospheres</button>
+    <button role="tab" aria-selected="false" aria-controls="p-sources" id="t-sources">Sources</button>
+    <button role="tab" aria-selected="false" aria-controls="p-eval" id="t-eval">Evaluation</button>
+    <button role="tab" aria-selected="false" aria-controls="p-about" id="t-about">About &amp; SI use</button>
+  </nav>
+
+  <main id="main">
+    <section role="tabpanel" id="p-ask" aria-labelledby="t-ask">
+      <form id="ask" class="ask" autocomplete="off">
+        <label for="q" class="vh">Ask a question about the corpus</label>
+        <input id="q" type="search" placeholder="e.g. Did flame spread over thick PMMA reach a steady rate?">
+        <button type="submit">Search sources</button>
+      </form>
+      <div class="chips" id="examples" aria-label="Example questions"></div>
+      <details class="byok" id="byok">
+        <summary>Live AI mode (optional): use your own Groq API key</summary>
+        <p class="note">Flamescope never stores a key in this site. A key you enter stays in this browser tab only (session storage) and is sent only to api.groq.com. Answers are checked here: any number that is not in a cited run or atmosphere target is rejected.</p>
+        <div class="byok-row">
+          <label for="gkey" class="vh">Groq API key</label>
+          <input id="gkey" type="password" autocomplete="off" spellcheck="false" placeholder="gsk_…">
+          <button type="button" id="gkey-save">Use for this tab</button>
+          <button type="button" id="gkey-clear" class="ghost">Forget key</button>
+        </div>
+        <p class="note" id="gkey-status"></p>
+      </details>
+      <p class="note">Retrieval runs in your browser over a fixed BM25 index. SI answers were generated offline with a Groq-hosted LLM, grounded in the retrieved records, and kept only if every number matches the run table.</p>
+      <div id="answer" aria-live="polite"></div>
+    </section>
+
+    <section role="tabpanel" id="p-insights" aria-labelledby="t-insights" hidden>
+      <div class="filters" id="card-filters"></div>
+      <div class="cards" id="cards"></div>
+    </section>
+
+    <section role="tabpanel" id="p-rank" aria-labelledby="t-rank" hidden>
+      <div class="rank-head">
+        <fieldset class="seg">
+          <legend>Target atmosphere</legend>
+          <span id="targets"></span>
+        </fieldset>
+        <label class="toggle"><input type="checkbox" id="preview"> Preview unverified runs</label>
+      </div>
+      <div id="rank-warn"></div>
+      <div class="rank-grid">
+        <figure class="plot">
+          <figcaption>Oxygen vs total pressure: eligible runs and mission targets</figcaption>
+          <div id="plot"></div>
+        </figure>
+        <div>
+          <p class="note" id="criteria"></p>
+          <ol class="ranked" id="ranked"></ol>
+        </div>
+      </div>
+    </section>
+
+    <section role="tabpanel" id="p-runs" aria-labelledby="t-runs" hidden>
+      <div class="filters">
+        <label>Status
+          <select id="f-status">
+            <option value="all">All</option>
+            <option value="eligible">Eligible (required fields present)</option>
+            <option value="excluded">Excluded (missing required field)</option>
+            <option value="checked_against_source">Verified</option>
+            <option value="unverified">Unverified</option>
+            <option value="conflict_found">Conflict found</option>
+          </select>
+        </label>
+        <label>Filter <input id="f-text" type="search" placeholder="fuel, mission, run id…"></label>
+      </div>
+      <div id="runs"></div>
+    </section>
+
+    <section role="tabpanel" id="p-atm" aria-labelledby="t-atm" hidden><div id="atm"></div></section>
+    <section role="tabpanel" id="p-sources" aria-labelledby="t-sources" hidden><div id="sources"></div></section>
+    <section role="tabpanel" id="p-eval" aria-labelledby="t-eval" hidden><div id="eval"></div></section>
+    <section role="tabpanel" id="p-about" aria-labelledby="t-about" hidden><div id="about" class="prose"></div></section>
+  </main>
+
+  <dialog id="drawer" aria-labelledby="drawer-title">
+    <div class="drawer-head"><h2 id="drawer-title"></h2><button type="button" id="drawer-close" aria-label="Close">×</button></div>
+    <div id="drawer-body"></div>
+  </dialog>
+
+  <footer class="foot">Flamescope is an independent hackathon project built from public NASA NTRS reports and PSI datasets. It is not an official NASA product. SI-assisted content is labeled throughout (see About &amp; SI use). Data snapshot <span id="snap"></span>.</footer>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

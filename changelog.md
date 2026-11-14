@@ -1,0 +1,51 @@
+# Changelog
+
+## 2026-11-14
+
+- Created `data/manifest.csv` with 10 entries (D-0001 to D-0010). Only D-0001 and D-0002 were named by the brief. D-0003 to D-0010 are candidates found by searching NTRS and PSI, marked `candidate_pending_confirmation`. Reason: the list of 10 seed documents was not in the project folder.
+- Pulled full text for NTRS 19950007798 (USML-1) and 19970020608 (SSCE thick fuel) from the NTRS API, OCR text plus PDF. Stored in `raw/`.
+- Created `data/runs.csv` with 11 runs. FS-0001 to FS-0005 are thin cellulose runs from D-0001. FS-0006 to FS-0011 are PMMA runs from D-0002, one row per sample (2 per flight). All are `unverified`. Extraction was AI-assisted (`extraction_method` column).
+  - Converted units: atm to kPa (x 101.325), cm/s to mm/s (x 10). The as-reported value is kept next to each converted value. `scripts/build.py` checks the conversions.
+  - Left FS-0002 to FS-0005 `mission` blank: D-0001 gives spread rates for these conditions but does not map them to flights.
+  - Left the FS-0006 to FS-0011 spread rates blank: D-0002 shows them only in Fig. 2.
+  - Left `question_answered` blank on all rows and flagged it: there is no team rule yet for mapping runs to transport, habitat, or long-duration.
+  - Left `flow_velocity_m_s` blank: sources say "quiescent" and give no number.
+- Added `shuttle` to the platform enum in `scripts/build.py`. Reason: all 11 runs are Space Shuttle flights. The team post is drafted in `team_posts.md` and has not been sent.
+- Checked PSI licenses: PSI-25, 26, 62, 98, 99, 100 are all CC0-1.0. PSI requires citing each dataset DOI. DOIs are recorded in the manifest.
+- Created `data/atmosphere_targets.csv`. Moon 8.2 psia / 34% O2 is cited to NASA/TM-2013-217377. Mars 101 kPa / 21% has no source yet and is marked `needs_citation`.
+- Created `data/chunks.jsonl` (28 chunks) with `scripts/build.py`.
+  - D-0001 and D-0002 have the NTRS flag `MAY_INCLUDE_COPYRIGHT_MATERIAL`. They are stored as 7 short verbatim excerpts only, tagged `chunk_type: short_excerpt` and `ai_assisted: true` (OCR cleanup). Each excerpt is below the 300-token target on purpose.
+  - D-0003 and D-0004 abstracts (public use permitted) and PSI objective, approach, and hypothesis fields (CC0) are stored as full text. Many are under 300 tokens because the source sections are short. Sections are not merged with each other.
+  - Token counts are approximate (words x 1.3) until the embedding tokenizer is confirmed.
+- Created `config.yaml`. `embedding.model_name` is null until the ML engineer confirms an offline model.
+- Not done yet: BM25 and embedding index (Step 4) and `eval_set.json` (Step 5).
+- Set `embedding.model_name` to `google/embeddinggemma-300m`, pinned to Hugging Face revision `57c266a7`. Reason: the ML engineer confirmed "Gemma 2 embedding". The user chose EmbeddingGemma-300m over BAAI/bge-multilingual-gemma2.
+- Added a BM25 index (`data/bm25_index.json`, k1 1.2, b 0.75) to `scripts/build.py`, using the standard library only. It includes a self-check: a USML-1 query must return C-0001 first, and an off-topic query must return nothing. Reason: this is the keyword half of the Step 4 hybrid index.
+- Embedding vectors are not built yet. They need `sentence-transformers` and the gated model download, which requires accepting the Gemma terms on Hugging Face.
+- Installed `sentence-transformers` in `.venv` (Python 3.14, because torch has no Python 3.15 build). Added `scripts/embed.py` for embeddings and hybrid search; settings are read from `config.yaml`, and `retrieval.min_cosine` gates refusal.
+  - Blocked: Hugging Face returns 403 "not in the authorized list" for `google/embeddinggemma-300m`. The token on this machine has not been granted access yet. `pipeline.sh` continues on BM25 alone.
+- Added `scripts/fetch.py`, which fetches every source in the manifest from the NTRS and PSI APIs, including PSI experimental tables. Reason: replaces the manual curl steps, and nothing is fetched without a manifest entry.
+- Added `scripts/extract.py`, which maps the BASS, BASS-II, Saffire-I, Saffire-II, and Saffire-III tables to 264 run rows (FS-1001 upward).
+  - Approximate cells such as "~ 21.5" keep their number and get a flag. Ranges and text cells keep only the as-reported text.
+  - Saffire outcome rule: a microgravity burn length of "~ 0" maps to `no_spread`; a burn length equal to the sample length maps to `spread`.
+  - None of these tables reports pressure, so all 264 runs are excluded from ranking. They stay visible.
+- Renamed the hand-curated runs file to `data/runs_curated.csv` and added an `o2_as_reported` column. `build.py` now merges the curated and PSI rows into `data/runs.csv`.
+- Added `cygnus` to the platform enum. Reason: PSI lists Saffire runs on the Cygnus vehicle. Pending team approval (`team_posts.md`).
+- PSI-98 (Saffire-I) lists its platform as ISS in one field and Cygnus in another. Its rows carry the flag `platform_inconsistent_in_source`.
+- Added stopwords to BM25 so that common words alone do not count as retrieval hits. This matters for refusal.
+- Added `data/eval_set.json` (20 questions plus 5 off-topic) and `scripts/eval.py`.
+  - BM25 baseline: retrieval hit rate 0.867 (Q06 and Q16 missed) and off-topic refusal 0.8 (X03 missed). The gold set was not tuned to these results.
+  - `eval.py` also scores number accuracy, citation accuracy, and refusal for a generated-answers file.
+- Added `data/insight_cards.json` (6 cards, AI-drafted) and `scripts/export.py`, which rejects any card whose numbers are not in its cited rows.
+  - Card IC-05 was reworded from "1-butanol" and "1 g" to "butanol" and "Earth gravity" to pass the number rule.
+- Added the static dashboard (`web/index.html`, `app.js`, `style.css`), `pipeline.sh`, `README.md`, and `.claude/launch.json` for a local preview server.
+  - Ranking criteria are provisional, because the contract's ranking criteria were not provided.
+- Renamed the project to Flamescope at the user's request (it was Microgravity Fire Atlas).
+- Added `scripts/groq_generate.py`. It produces offline Groq answers grounded in runs and passages retrieved by BM25, using the shared prompt in `data/llm_prompt.json`.
+  - Validation: an answer reaches the site only if its citations exist and every number matches a cited run or atmosphere field.
+  - The key is read from the environment or a gitignored `.env` file and is never written anywhere. The model is set in `config.yaml` (`llm.model`) and checked against Groq's model list at run time.
+- Added the optional live AI mode to the dashboard. Visitors paste their own Groq key, which stays in session storage and is sent only to api.groq.com. Reason: GitHub Pages is public, so a key built into the site would leak.
+- Added the "About & SI use" tab and an `ai-assistance` meta tag. Reason: the Space Apps submission guide requires SI use in code and data to be acknowledged in descriptive text and metadata.
+- Added `.gitignore`. It keeps out `.env`, `.venv`, and the full text of the two NTRS papers flagged as possibly containing copyrighted material. Only short excerpts of those papers are published.
+- Added `.github/workflows/pages.yml` to publish `web/` to GitHub Pages.
+- Not done yet: Groq answers have not been generated, because there is no key on this machine. The site shows source retrieval and curated answers until `./pipeline.sh` runs with `GROQ_API_KEY` set.

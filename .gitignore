@@ -1,0 +1,13 @@
+# secrets: Groq key lives only in the shell or this file
+.env
+# local tooling
+.venv/
+__pycache__/
+.claude/
+.DS_Store
+# NTRS flags these two papers MAY_INCLUDE_COPYRIGHT_MATERIAL: keep full text local, publish short excerpts only
+raw/19950007798.txt
+raw/19970020608.txt
+raw/*.pdf
+# large / regenerable
+data/embeddings.npy

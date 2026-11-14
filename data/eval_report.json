@@ -1,0 +1,274 @@
+{
+ "retrieval_hit_rate": 0.867,
+ "retrieval_scored": 15,
+ "off_topic_refusal_rate": 0.8,
+ "per_question": [
+  {
+   "id": "Q01",
+   "type": "answer",
+   "retrieved": [
+    "C-0001",
+    "C-0003",
+    "C-0027",
+    "C-0015",
+    "C-0021"
+   ],
+   "hit": true
+  },
+  {
+   "id": "Q02",
+   "type": "answer",
+   "retrieved": [
+    "C-0001",
+    "C-0005",
+    "C-0016",
+    "C-0027",
+    "C-0013"
+   ],
+   "hit": true
+  },
+  {
+   "id": "Q03",
+   "type": "answer",
+   "retrieved": [
+    "C-0003",
+    "C-0007",
+    "C-0008",
+    "C-0027",
+    "C-0015"
+   ],
+   "hit": true
+  },
+  {
+   "id": "Q04",
+   "type": "answer",
+   "retrieved": [
+    "C-0003",
+    "C-0001",
+    "C-0005",
+    "C-0004",
+    "C-0007"
+   ],
+   "hit": true
+  },
+  {
+   "id": "Q05",
+   "type": "answer",
+   "retrieved": [
+    "C-0001",
+    "C-0007",
+    "C-0004",
+    "C-0008",
+    "C-0003"
+   ],
+   "hit": true
+  },
+  {
+   "id": "Q06",
+   "type": "answer",
+   "retrieved": [
+    "C-0001",
+    "C-0015",
+    "C-0021",
+    "C-0026",
+    "C-0018"
+   ],
+   "hit": false
+  },
+  {
+   "id": "Q07",
+   "type": "answer",
+   "retrieved": [
+    "C-0001",
+    "C-0005",
+    "C-0016",
+    "C-0007",
+    "C-0021"
+   ],
+   "hit": true
+  },
+  {
+   "id": "Q08",
+   "type": "answer",
+   "retrieved": [
+    "C-0007",
+    "C-0004",
+    "C-0027",
+    "C-0005",
+    "C-0001"
+   ],
+   "hit": true
+  },
+  {
+   "id": "Q09",
+   "type": "answer",
+   "retrieved": [
+    "C-0005",
+    "C-0021",
+    "C-0001",
+    "C-0009",
+    "C-0018"
+   ],
+   "hit": true
+  },
+  {
+   "id": "Q10",
+   "type": "unsupported",
+   "retrieved": [
+    "C-0007",
+    "C-0005",
+    "C-0027",
+    "C-0021",
+    "C-0015"
+   ]
+  },
+  {
+   "id": "Q11",
+   "type": "answer",
+   "retrieved": [
+    "C-0008",
+    "C-0007",
+    "C-0027",
+    "C-0015",
+    "C-0026"
+   ],
+   "hit": true
+  },
+  {
+   "id": "Q12",
+   "type": "answer",
+   "retrieved": [
+    "C-0008",
+    "C-0015",
+    "C-0001",
+    "C-0027",
+    "C-0012"
+   ],
+   "hit": true
+  },
+  {
+   "id": "Q13",
+   "type": "answer",
+   "retrieved": [
+    "C-0008",
+    "C-0007",
+    "C-0027",
+    "C-0015",
+    "C-0026"
+   ],
+   "hit": true
+  },
+  {
+   "id": "Q14",
+   "type": "unsupported",
+   "retrieved": [
+    "C-0020",
+    "C-0023",
+    "C-0017",
+    "C-0016",
+    "C-0013"
+   ]
+  },
+  {
+   "id": "Q15",
+   "type": "answer",
+   "retrieved": [
+    "C-0009",
+    "C-0010",
+    "C-0001",
+    "C-0015",
+    "C-0008"
+   ],
+   "hit": true
+  },
+  {
+   "id": "Q16",
+   "type": "answer",
+   "retrieved": [
+    "C-0021",
+    "C-0024",
+    "C-0018",
+    "C-0007",
+    "C-0015"
+   ],
+   "hit": false
+  },
+  {
+   "id": "Q17",
+   "type": "answer",
+   "retrieved": [
+    "C-0021",
+    "C-0015",
+    "C-0027",
+    "C-0012",
+    "C-0020"
+   ]
+  },
+  {
+   "id": "Q18",
+   "type": "answer",
+   "retrieved": [
+    "C-0018",
+    "C-0015",
+    "C-0021",
+    "C-0011",
+    "C-0024"
+   ]
+  },
+  {
+   "id": "Q19",
+   "type": "answer",
+   "retrieved": [
+    "C-0011",
+    "C-0027",
+    "C-0012",
+    "C-0023",
+    "C-0017"
+   ],
+   "hit": true
+  },
+  {
+   "id": "Q20",
+   "type": "unsupported",
+   "retrieved": [
+    "C-0025",
+    "C-0022",
+    "C-0019",
+    "C-0027",
+    "C-0009"
+   ]
+  },
+  {
+   "id": "X01",
+   "type": "off_topic",
+   "retrieved": [],
+   "refused": true
+  },
+  {
+   "id": "X02",
+   "type": "off_topic",
+   "retrieved": [],
+   "refused": true
+  },
+  {
+   "id": "X03",
+   "type": "off_topic",
+   "retrieved": [
+    "C-0009"
+   ],
+   "refused": false
+  },
+  {
+   "id": "X04",
+   "type": "off_topic",
+   "retrieved": [],
+   "refused": true
+  },
+  {
+   "id": "X05",
+   "type": "off_topic",
+   "retrieved": [],
+   "refused": true
+  }
+ ]
+}

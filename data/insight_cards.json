@@ -1,0 +1,53 @@
+{
+  "notes": "Drafted offline with AI assistance (Claude) from runs.csv and chunks.jsonl. scripts/export.py rejects any card whose numbers are not field values of its cited runs or atmosphere_targets.csv, or whose citations do not exist. Card status is computed from the cited runs' verification_status.",
+  "cards": [
+    {
+      "id": "IC-01",
+      "title": "Thin-fuel flames spread faster with more oxygen and higher pressure",
+      "question_answered": "habitat",
+      "claim": "Across the five SSCE thin cellulose shuttle runs, leading-edge spread rose from 0.92 mm/s (35% O2, 101.325 kPa) to 5.47 mm/s (50% O2, 202.650 kPa). The authors report that spread increases with both oxygen content and pressure.",
+      "implication": "Oxygen-enriched cabins raise flame spread hazard for thin materials such as paper and fabric, even in quiescent microgravity.",
+      "citations": ["FS-0001", "FS-0002", "FS-0003", "FS-0004", "FS-0005", "C-0003", "C-0004"]
+    },
+    {
+      "id": "IC-02",
+      "title": "No tested run matches the Moon habitat atmosphere",
+      "question_answered": "habitat",
+      "claim": "The Moon target is 34% O2 at 56.537 kPa. The closest run in the table is FS-0001 at 35% O2, but at 101.325 kPa. No run in the table was flown below 101.325 kPa.",
+      "implication": "Reduced-pressure, oxygen-enriched flame spread is a data gap for lunar habitats. Shuttle-era trends cannot be extrapolated to lower pressure without new tests.",
+      "citations": ["FS-0001", "FS-0002", "C-0009", "C-0010"]
+    },
+    {
+      "id": "IC-03",
+      "title": "Thick PMMA never settled into steady spread",
+      "question_answered": "long-duration",
+      "claim": "In all three SSCE thick-fuel flights (70% O2 at 101.325 kPa; 50% O2 at 101.325 kPa; 50% O2 at 202.650 kPa) the spread rate slowly decreased with time instead of reaching a steady value.",
+      "implication": "Spread rates measured over short tests may not describe thick materials. Without opposing flow, thick fuels may slow down and extinguish, which ventilation can reverse.",
+      "citations": ["FS-0006", "FS-0008", "FS-0010", "C-0005", "C-0007"]
+    },
+    {
+      "id": "IC-04",
+      "title": "Fabric spread, silicone did not (Saffire-II)",
+      "question_answered": "transport",
+      "claim": "In Saffire-II concurrent flow of 0.2 m/s, the cotton-fiberglass samples spread at 2.1 and 2.6 mm/s, while all four silicone samples showed about zero microgravity burn length.",
+      "implication": "Material choice is a first-order fire control for transit vehicles. These runs are excluded from ranking because the PSI table does not give cabin pressure.",
+      "citations": ["FS-1254", "FS-1255", "FS-1256", "FS-1257", "FS-1258", "FS-1259", "C-0020"]
+    },
+    {
+      "id": "IC-05",
+      "title": "Flames over liquid pools were slower and steadier in microgravity",
+      "question_answered": "transport",
+      "claim": "Spread Across Liquids sounding-rocket flights over a butanol pool found flame spread much slower and steadier in microgravity than in normal Earth gravity, where spread pulsates.",
+      "implication": "Ground tests of liquid-fuel spills can overstate spread speed and misrepresent flame behavior in orbit.",
+      "citations": ["C-0008"]
+    },
+    {
+      "id": "IC-06",
+      "title": "No partial-gravity data yet",
+      "question_answered": "habitat",
+      "claim": "Every run in the table is microgravity. None records lunar or Martian gravity, and the ISS and Cygnus table runs report no cabin pressure.",
+      "implication": "Moon and Mars surface fire risk cannot be ranked from this corpus. Partial-gravity sources are the top data need.",
+      "citations": ["FS-0001", "FS-1001", "FS-1252"]
+    }
+  ]
+}
