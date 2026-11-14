@@ -70,7 +70,7 @@ Python (standard library, sentence-transformers), TypeScript with Next.js, React
 | BASS flamelet modeling (PSI-62) | 10.60555/e9xp-ex83 |
 
 ## Space Agency Partner Data and Other References
-- **Partner data:** no Space Agency Partner data was used. [Add any you include.]
+- **Partner data:** no Space Agency Partner data was used.
 - **Tools and services:** the Groq API (LLM inference), sentence-transformers, Next.js, React, Tailwind CSS, Framer Motion, Phosphor Icons, the Geist typeface, GitHub Pages and Actions, and Claude by Anthropic (SI-assisted development). Every source with its URL is in SOURCES.md in the repository.
 - **Copyright:** two NTRS papers are flagged by NTRS as possibly containing copyrighted material. Flamescope publishes only short excerpts from them, with links to the full text. No NASA logos or branding are used.
 

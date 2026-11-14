@@ -44,7 +44,7 @@ function Hero() {
   const count = (f: (r: Row) => boolean) => DATA.runs.filter(f).length;
   const ledger: [number, string][] = [
     [DATA.runs.length, "runs in one table"],
-    [count((r) => r.verification_status === "checked_against_source" && complete(r)), "verified"],
+    [count((r) => r.verification_status === "checked_against_source" && complete(r)), "AI re-checked"],
     [count((r) => r.verification_status === "unverified" && complete(r)), "awaiting a check"],
     [DATA.manifest.length, "NASA sources"],
   ];
@@ -156,8 +156,8 @@ function Rank() {
             </ol>
           ) : (
             <div className="rounded-2xl border border-dashed border-line p-8">
-              <p className="font-medium">No verified runs yet</p>
-              <p className="mt-2 max-w-[48ch] text-sm leading-relaxed text-mute">A run joins the ranking once a second person has checked each of its numbers against the source. Conflicting runs never join. Turn on the preview to see the runs awaiting a check.</p>
+              <p className="font-medium">No ranked runs yet</p>
+              <p className="mt-2 max-w-[48ch] text-sm leading-relaxed text-mute">A run joins the ranking once its numbers have been checked against the source. So far the check is an AI re-check, not independent; a teammate's check is still needed. Conflicting runs never join. Turn on the preview to see the runs awaiting a check.</p>
             </div>
           )}
           <p className="mt-6 max-w-[60ch] text-xs leading-relaxed text-mute">Provisional order: closest to the target first (relative oxygen difference plus log pressure ratio), ties broken by faster measured spread.</p>
@@ -191,7 +191,7 @@ function Runs() {
       <div className="mb-8 flex flex-wrap items-end gap-4">
         <div className="grid gap-2"><label htmlFor="f-st" className="text-sm text-mute">Status</label>
           <select id="f-st" value={st} onChange={(e) => setSt(e.target.value)} className="h-10 rounded-lg border border-line bg-panel px-3 text-sm outline-none focus:border-ember">
-            <option value="all">All runs</option><option value="eligible">Has every required field</option><option value="excluded">Missing a required field</option><option value="checked_against_source">Verified</option><option value="unverified">Awaiting a check</option>
+            <option value="all">All runs</option><option value="eligible">Has every required field</option><option value="excluded">Missing a required field</option><option value="checked_against_source">AI re-checked</option><option value="unverified">Awaiting a check</option>
           </select></div>
         <div className="grid min-w-[16rem] flex-1 gap-2"><label htmlFor="f-q" className="text-sm text-mute">Filter</label>
           <input id="f-q" value={q} onChange={(e) => setQ(e.target.value)} placeholder="Fuel, mission or run ID" className="h-10 rounded-lg border border-line bg-panel px-3 text-sm outline-none focus:border-ember" /></div>
