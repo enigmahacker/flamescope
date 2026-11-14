@@ -337,7 +337,7 @@
     g += `<line class="gap" x1="${X(minP)}" x2="${X(minP)}" y1="${m.t}" y2="${H - m.b}"><title>Lowest pressure with a run: ${esc(String(minP))} kPa</title></line>`;
     for (const t of T) {
       const on = !sel || t.target_id === sel.target_id, x = X(+t.total_pressure_kpa), y = Y(+t.o2_fraction_pct);
-      const left = +t.total_pressure_kpa < minP;  // targets below every tested pressure get their label above, clear of the axis and the data
+      const left = X(minP) - x > 40;  // targets well left of every tested pressure get their label above, clear of the axis and the data
       const name = t.target_id === "ATM-MOON" ? "Moon habitat" : t.target_id === "ATM-MARS" ? "Mars transit" : t.target_id;
       g += `<g opacity="${on ? 1 : 0.35}"><circle class="target-zone" cx="${x}" cy="${y}" r="22"/><circle class="target" cx="${x}" cy="${y}" r="14" ${t.source_url ? "" : 'stroke-dasharray="3 3"'}/>
         <text class="tlabel" x="${left ? x : x + 12}" y="${left ? y - 42 : y + 30}" text-anchor="${left ? "middle" : "start"}">${esc(name)}</text><text class="tsub" x="${left ? x : x + 12}" y="${left ? y - 27 : y + 45}" text-anchor="${left ? "middle" : "start"}">${esc(t.o2_fraction_pct)}% O₂, ${esc(t.total_pressure_kpa)} kPa${t.source_url ? "" : ", uncited"}</text></g>`;
