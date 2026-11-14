@@ -112,7 +112,8 @@ def main():
                 {"role": "user", "content": PROMPT["user_template"].format(question=q["question"],
                                                                             context=context(q["question"], runs, chunks, atm, cidx, ridx))}]
         resp = groq("/chat/completions", key, {"model": CFG["model"], "messages": msgs, "temperature": CFG["temperature"],
-                                               "max_tokens": CFG["max_tokens"], "response_format": {"type": "json_object"}})
+                                               "max_tokens": CFG["max_tokens"], "reasoning_effort": CFG.get("reasoning_effort", "low"),
+                                               "response_format": {"type": "json_object"}})
         try:
             ans = json.loads(resp["choices"][0]["message"]["content"])
         except (KeyError, json.JSONDecodeError):

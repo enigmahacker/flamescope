@@ -70,7 +70,7 @@ These are candidates for the next round of seed documents.
 
 ## 3. Models and AI services
 - **Claude by Anthropic, via Claude Code** (SI): generated the code, the extraction, the drafts, and the documentation. https://www.anthropic.com/claude and https://claude.com/claude-code
-- **Groq API** (LLM inference for the answers): https://api.groq.com/openai/v1. Docs: https://console.groq.com/docs. Model: `llama-3.3-70b-versatile` (set in `config.yaml`).
+- **Groq API** (LLM inference for the answers): https://api.groq.com/openai/v1. Docs: https://console.groq.com/docs. Model: `openai/gpt-oss-120b` (set in `config.yaml`).
 - **google/embeddinggemma-300m** (chosen embedding model; access pending): https://huggingface.co/google/embeddinggemma-300m. Pinned revision `57c266a740f537b4dc058e1b0cda161fd15afa75`.
 - **BAAI/bge-multilingual-gemma2** (considered, not chosen): https://huggingface.co/BAAI/bge-multilingual-gemma2
 

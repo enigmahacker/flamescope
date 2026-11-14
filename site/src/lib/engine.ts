@@ -101,11 +101,14 @@ export async function liveAnswer(key: string, q: string, chunkIds: string[], run
   const r = await fetch("https://api.groq.com/openai/v1/chat/completions", {
     method: "POST",
     headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
-    body: JSON.stringify({ model: B.llm_model, temperature: 0, max_tokens: 400, response_format: { type: "json_object" },
+    body: JSON.stringify({ model: B.llm_model, temperature: 0, max_tokens: 1500, reasoning_effort: "low", response_format: { type: "json_object" },
       messages: [{ role: "system", content: B.llm_prompt.system }, { role: "user", content: B.llm_prompt.user_template.replace("{question}", q).replace("{context}", ctx) }] }),
   });
-  if (!r.ok) throw new Error(r.status === 401 ? "The key was rejected (401). Check it and try again." : `Groq returned ${r.status}. Try again in a minute.`);
-  return checkAnswer(JSON.parse((await r.json()).choices[0].message.content));
+  if (!r.ok) throw new Error(r.status === 401 ? "The key was rejected (401). Check it and try again." : r.status === 404 ? `Groq does not offer the model ${B.llm_model} to this key (404).` : r.status === 429 ? "Groq rate limit reached (429). Try again in a minute." : `Groq returned ${r.status}.`);
+  const body = await r.json();
+  const content = body.choices?.[0]?.message?.content;
+  if (!content) throw new Error("Groq returned an empty answer.");
+  return checkAnswer(JSON.parse(content));
 }
 
 /* ---------- Evidence map colour: flame blue to soot amber by oxygen (C-0004) ---------- */
