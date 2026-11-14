@@ -55,7 +55,7 @@ export default function EvidenceMap({ selected }: { selected?: string }) {
       <figcaption className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs text-mute">
         <span className="inline-flex items-center gap-2 font-mono">{lo}% O2<i className="inline-block h-2 w-20 rounded-full" style={{ background: "linear-gradient(90deg in oklch, var(--color-flame), var(--color-ember))" }} />{hi}% O2</span>
         <span className="inline-flex items-center gap-1.5"><i className="inline-block h-2.5 w-2.5 rounded-full border-2 border-flame" />Awaiting a check</span>
-        <span className="inline-flex items-center gap-1.5"><i className="inline-block h-2.5 w-2.5 rounded-full bg-flame" />Verified</span>
+        <span className="inline-flex items-center gap-1.5"><i className="inline-block h-2.5 w-2.5 rounded-full bg-flame" />AI re-checked</span>
         <span>Click a dot or ring for its source.</span>
       </figcaption>
     </figure>

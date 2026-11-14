@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-11-14 (audit follow-up)
+
+- Restored the two `.gitignore` lines for `raw/19950007798.txt` and `raw/19970020608.txt`. Reason: NTRS flags both papers as possibly containing copyright material (rule 10), and the lines were dropped by mistake in the cleanup commit.
+- Relabelled "Verified" to "AI re-checked" on the site (badges, ledger, filter, evidence-map legend, empty-ranking text). Reason: FS-0001 to FS-0011 were re-checked by the same agent that extracted them, so they are not independent (rule 5). Data values and `verification_status` are unchanged; revert the labels once a teammate checks the rows. SI-assisted.
+- SUBMISSION.md: removed the "[Add any you include.]" placeholder; the line now only states that no Space Agency Partner data was used.
+
 ## 2026-11-14
 
 - Created `data/manifest.csv` with 10 entries (D-0001 to D-0010). Only D-0001 and D-0002 were named by the brief. D-0003 to D-0010 are candidates found by searching NTRS and PSI, marked `candidate_pending_confirmation`. Reason: the list of 10 seed documents was not in the project folder.
