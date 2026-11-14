@@ -13,81 +13,92 @@
   <meta name="ai-assistance" content="Deck copy and code drafted by SI (Claude by Anthropic) under team direction. Project idea: human (team). No SI-generated images.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@400;500;600&family=Spectral:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap">
   <style>
-    /* Tokens mirror design-tokens.json */
-    :root { --paper:#f2f4f7; --surface:#fff; --ink:#18233a; --ink-2:#4b5670; --rule:#d6dce6; --flame:#2d5bd0; --soot:#d9902a; --ember:#b0384a; --verified:#1e7559;
-      --serif:"Spectral",Georgia,serif; --sans:"IBM Plex Sans Condensed","Arial Narrow",Arial,sans-serif; }
+    /* Tokens mirror site/src/app/globals.css (@theme): one accent (ember), flame blue for low-oxygen data only. */
+    :root { --void:#0b0d12; --panel:#12151c; --raise:#181c25; --line:#242a37; --ink:#e8eaf0; --mute:#9aa1b2; --ember:#e8913a; --flame:#5b84e8; --ok:#4fb38a; --bad:#e06c7a;
+      --sans:"Geist",ui-sans-serif,system-ui,sans-serif; --mono:"Geist Mono",ui-monospace,monospace; color-scheme: dark; }
     * { box-sizing: border-box; }
-    html, body { margin: 0; height: 100%; background: #dfe3ea; color: var(--ink); }
-    body { display: grid; place-items: center; font-family: var(--serif); }
+    html, body { margin: 0; height: 100%; background: #07080c; color: var(--ink); }
+    body { display: grid; place-items: center; font-family: var(--sans); -webkit-font-smoothing: antialiased; }
+    .grain { position: fixed; inset: 0; z-index: 5; pointer-events: none; opacity: .05; mix-blend-mode: overlay;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"); }
     .deck { width: min(100vw, 177.78vh); aspect-ratio: 16 / 9; position: relative; }
-    .slide { position: absolute; inset: 0; background: var(--paper); container-type: inline-size; padding: 5.5cqw 6cqw 4.5cqw; display: none; flex-direction: column; overflow: hidden; }
+    .slide { position: absolute; inset: 0; background: var(--void); container-type: inline-size; padding: 5cqw 6cqw 4cqw; display: none; flex-direction: column; overflow: hidden; }
     .slide.on { display: flex; }
-    .brand { display: flex; align-items: center; gap: 0.8cqw; font: 600 1.5cqw/1 var(--sans); }
-    .brand svg { width: 2cqw; height: 2cqw; }
-    h1 { font: 500 5.2cqw/1.08 var(--serif); letter-spacing: -0.015em; margin: 0; max-width: 17ch; }
-    h2 { font: 500 3.4cqw/1.12 var(--serif); letter-spacing: -0.01em; margin: 0 0 2.2cqw; max-width: 26ch; }
-    p, li { font-size: 1.75cqw; line-height: 1.45; }
-    .small { font: 1.35cqw/1.45 var(--sans); color: var(--ink-2); }
-    .foot { margin-top: auto; display: flex; justify-content: space-between; gap: 2cqw; font: 1.1cqw/1.3 var(--sans); color: var(--ink-2); border-top: 1px solid var(--rule); padding-top: 1cqw; }
+    .brand { display: flex; align-items: center; gap: 0.8cqw; font: 600 1.5cqw/1 var(--sans); letter-spacing: -0.01em; }
+    .brand i { width: 0.8cqw; height: 0.8cqw; border-radius: 50%; background: var(--ember); box-shadow: 0 0 1.2cqw var(--ember); }
+    .eyebrow { color: var(--ember); font-size: 1.3cqw; margin: 0 0 1.2cqw; }
+    h1 { font: 500 4.4cqw/1.04 var(--sans); letter-spacing: -0.04em; margin: 0; max-width: 18ch; }
+    h2 { font: 500 3.2cqw/1.08 var(--sans); letter-spacing: -0.035em; margin: 0 0 2.4cqw; max-width: 26ch; }
+    p, li { font-size: 1.6cqw; line-height: 1.55; color: color-mix(in oklch, var(--ink) 90%, transparent); }
+    .small { font-size: 1.3cqw; line-height: 1.5; color: var(--mute); }
+    .foot { margin-top: auto; display: flex; justify-content: space-between; gap: 2cqw; font-size: 1.05cqw; color: var(--mute); border-top: 1px solid var(--line); padding-top: 1cqw; }
     .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 4cqw; align-items: start; }
-    .facts { display: grid; grid-template-columns: max-content 1fr; gap: 0.8cqw 2cqw; margin: 3cqw 0 0; font: 1.7cqw/1.35 var(--sans); }
-    .facts dt { color: var(--ink-2); }
+    .hero { display: grid; grid-template-columns: 1.15fr 1fr; gap: 3cqw; align-items: center; flex: 1; }
+    .hero canvas { width: 100%; aspect-ratio: 1; display: block; }
+    .facts { display: grid; grid-template-columns: max-content 1fr; gap: 0.8cqw 2cqw; margin: 3cqw 0 0; font-size: 1.45cqw; line-height: 1.4; border-top: 1px solid var(--line); padding-top: 1.6cqw; }
+    .facts dt { color: var(--mute); }
     .facts dd { margin: 0; }
-    .fill { background: #fbf0de; outline: 1px dashed var(--soot); padding: 0 0.4cqw; }
-    .big { font: 600 5.5cqw/1 var(--sans); font-variant-numeric: tabular-nums; }
-    .stat { border-top: 1px solid var(--rule); padding-top: 1.2cqw; }
-    .stat .lbl { font: 1.4cqw/1.35 var(--sans); color: var(--ink-2); margin-top: 0.5cqw; }
-    .frame { border: 1px solid var(--rule); border-radius: 0.5cqw; overflow: hidden; background: var(--surface); position: relative; height: 31cqw; }
+    .fill { color: var(--ember); border: 1px dashed color-mix(in oklch, var(--ember) 60%, transparent); border-radius: 0.4cqw; padding: 0 0.5cqw; }
+    .big { font: 500 5cqw/1 var(--mono); letter-spacing: -0.03em; }
+    .stat { border-top: 1px solid var(--line); padding-top: 1.4cqw; }
+    .stat .lbl { font-size: 1.3cqw; line-height: 1.4; color: var(--mute); margin-top: 0.7cqw; }
+    .frame { border: 1px solid var(--line); border-radius: 1.2cqw; overflow: hidden; background: var(--panel); position: relative; height: 30cqw; box-shadow: inset 0 1px 0 rgba(255,255,255,.05); }
     .frame iframe { border: 0; width: 1560px; height: 900px; transform-origin: 0 0; pointer-events: none; }
-    .qa { background: var(--surface); border: 1px solid var(--rule); border-radius: 0.5cqw; padding: 1.6cqw 2cqw; margin-bottom: 1.4cqw; }
-    .qa .q { font: 600 1.6cqw/1.35 var(--sans); margin: 0 0 0.6cqw; }
-    .qa .a { margin: 0; font-size: 1.75cqw; }
-    .qa.si { border-left: 0.35cqw solid var(--flame); }
-    .qa.no { border-left: 0.35cqw solid var(--soot); }
-    .cite { display: inline-block; font: 500 1.25cqw/1.5 var(--sans); border: 1px solid var(--rule); border-radius: 0.3cqw; padding: 0 0.5cqw; margin-right: 0.4cqw; background: var(--paper); }
+    .qa { background: var(--panel); border: 1px solid var(--line); border-radius: 1.2cqw; padding: 1.8cqw 2.2cqw; margin-bottom: 1.4cqw; }
+    .qa .q { font-weight: 500; font-size: 1.5cqw; margin: 0 0 0.6cqw; }
+    .qa .a { margin: 0; font-size: 1.6cqw; }
+    .tag { display: inline-block; font-size: 1.05cqw; border-radius: 99px; padding: 0.2cqw 0.9cqw; margin-bottom: 0.8cqw; }
+    .tag.si { background: color-mix(in oklch, var(--flame) 18%, transparent); color: var(--flame); }
+    .tag.no { border: 1px solid color-mix(in oklch, var(--ember) 45%, transparent); color: var(--ember); }
+    .cite { display: inline-block; font: 1.1cqw/1.6 var(--mono); border: 1px solid var(--line); border-radius: 0.4cqw; padding: 0 0.55cqw; margin-right: 0.4cqw; background: var(--raise); color: var(--ink); }
     ol.steps { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(5, 1fr); gap: 1.6cqw; counter-reset: s; }
-    ol.steps li { counter-increment: s; border-top: 0.3cqw solid var(--flame); padding-top: 1.2cqw; font: 1.5cqw/1.4 var(--sans); }
-    ol.steps li::before { content: counter(s); display: block; font: 600 2.6cqw/1 var(--sans); color: var(--flame); margin-bottom: 0.8cqw; }
-    ol.steps strong { display: block; font-size: 1.75cqw; margin-bottom: 0.4cqw; }
-    .finding { border-top: 1px solid var(--rule); padding: 1.4cqw 0; display: grid; grid-template-columns: 1fr 15cqw; gap: 2cqw; }
-    .finding h3 { font: 500 2.1cqw/1.25 var(--serif); margin: 0 0 0.5cqw; }
-    .finding p { margin: 0; font-size: 1.55cqw; color: var(--ink-2); }
-    .finding .cites { font: 1.25cqw var(--sans); color: var(--ink-2); align-self: center; }
-    a { color: var(--flame); }
-    .nav { position: fixed; bottom: 12px; right: 16px; display: flex; gap: 8px; align-items: center; font: 14px var(--sans); color: var(--ink-2); }
-    .nav button { font: 600 14px var(--sans); border: 1px solid var(--rule); background: var(--surface); color: var(--ink); border-radius: 4px; padding: 6px 12px; cursor: pointer; }
-    .nav button:focus-visible { outline: 2px solid var(--flame); outline-offset: 2px; }
+    ol.steps li { counter-increment: s; border-top: 1px solid var(--line); padding-top: 1.2cqw; font-size: 1.35cqw; line-height: 1.45; color: var(--mute); }
+    ol.steps li::before { content: counter(s, decimal-leading-zero); display: block; font: 500 1.3cqw/1 var(--mono); color: var(--ember); margin-bottom: 1cqw; }
+    ol.steps strong { display: block; font-size: 1.6cqw; font-weight: 500; color: var(--ink); margin-bottom: 0.4cqw; }
+    .finding { border-top: 1px solid var(--line); padding: 1.5cqw 0; display: grid; grid-template-columns: 1fr 16cqw; gap: 2cqw; }
+    .finding h3 { font: 500 1.9cqw/1.25 var(--sans); letter-spacing: -0.02em; margin: 0 0 0.5cqw; }
+    .finding p { margin: 0; font-size: 1.4cqw; color: var(--mute); }
+    .finding .cites { align-self: center; }
+    a { color: var(--ember); text-underline-offset: 0.3em; }
+    .nav { position: fixed; bottom: 14px; right: 16px; z-index: 6; display: flex; gap: 6px; align-items: center; font: 13px var(--mono); color: var(--mute);
+      background: rgba(18,21,28,.7); border: 1px solid rgba(255,255,255,.1); border-radius: 99px; padding: 5px; backdrop-filter: blur(12px); }
+    .nav button { font: 500 13px var(--sans); border: 0; background: var(--raise); color: var(--ink); border-radius: 99px; padding: 6px 14px; cursor: pointer; transition: transform .2s cubic-bezier(.16,1,.3,1); }
+    .nav button:active { transform: scale(.97); }
+    .nav button:focus-visible { outline: 2px solid var(--ember); outline-offset: 2px; }
     @media print {
       @page { size: 1600px 900px; margin: 0; }
-      html, body { background: none; display: block; height: auto; }
+      html, body { background: var(--void); display: block; height: auto; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
       .deck { width: 1600px; aspect-ratio: auto; }
       .slide { position: relative; display: flex !important; width: 1600px; height: 900px; break-after: page; }
-      .nav, .frame iframe { display: none; }
-      .frame::after { content: "Live site: enigmahacker.github.io/flamescope"; position: absolute; inset: 0; display: grid; place-items: center; font: 2cqw var(--sans); color: var(--ink-2); }
+      .nav, .grain, .frame iframe { display: none; }
+      .frame::after { content: "Live site: enigmahacker.github.io/flamescope"; position: absolute; inset: 0; display: grid; place-items: center; font-size: 2cqw; color: var(--mute); }
     }
   </style>
 </head>
 <body>
+<div class="grain" aria-hidden="true"></div>
 <main class="deck" aria-roledescription="slide deck">
 
   <!-- 1. Title -->
   <section class="slide" aria-label="Slide 1 of 7: title">
-    <div class="brand"><svg viewBox="0 0 32 32" aria-hidden="true"><defs><radialGradient id="fl" cx="50%" cy="58%" r="55%"><stop offset="0" stop-color="#d9902a"/><stop offset=".45" stop-color="#7f8fd8"/><stop offset="1" stop-color="#2d5bd0"/></radialGradient></defs><circle cx="16" cy="16" r="13" fill="url(#fl)" opacity=".22"/><circle cx="16" cy="17" r="9" fill="url(#fl)"/><circle cx="16" cy="18.5" r="3.2" fill="#18233a"/></svg>Flamescope</div>
-    <div style="margin-top:auto">
+    <div class="brand"><i></i>Flamescope</div>
+    <div class="hero"><div>
+      <p class="eyebrow">Microgravity fire evidence for crews on the Moon and Mars</p>
       <h1>How fire behaves off Earth, and what that means for crews on the Moon and Mars.</h1>
       <dl class="facts">
         <dt>Team</dt><dd><span class="fill">[Team name]</span></dd>
         <dt>Members</dt><dd><span class="fill">[Member names]</span></dd>
         <dt>Challenge</dt><dd>NASA Space Apps 2026: an SI-powered dashboard that summarizes, ranks, and interprets NASA microgravity fire findings for human exploration</dd>
       </dl>
-    </div>
-    <div class="foot" style="margin-top:4cqw"><span>enigmahacker.github.io/flamescope</span><span>Deck drafted with SI (Claude). Project idea: human (team).</span></div>
+    </div><canvas id="flame" aria-hidden="true"></canvas></div>
+    <div class="foot"><span>enigmahacker.github.io/flamescope</span><span>Deck drafted with SI (Claude). Project idea: human (team).</span></div>
   </section>
 
   <!-- 2. Problem -->
   <section class="slide" aria-label="Slide 2 of 7: the problem">
+    <p class="eyebrow">The problem</p>
     <h2>NASA has decades of fire experiments in space. They are hard to find, compare, or trust at a glance.</h2>
     <div class="grid2">
       <div>
@@ -104,6 +115,7 @@
 
   <!-- 3. Product -->
   <section class="slide" aria-label="Slide 3 of 7: the product">
+    <p class="eyebrow">The product</p>
     <h2>Flamescope puts every run on one map, with its source one click away.</h2>
     <div class="frame" id="frame"><iframe src="index.html" title="Flamescope live site" tabindex="-1" loading="lazy"></iframe></div>
     <p class="small" style="margin-top:1.2cqw">The live site: runs plotted by oxygen and pressure, colored from blue to amber as oxygen rises (as the flames themselves did), with Moon and Mars targets ringed. Hollow means awaiting a second-person check.</p>
@@ -112,11 +124,12 @@
 
   <!-- 4. User experience -->
   <section class="slide" aria-label="Slide 4 of 7: user experience">
+    <p class="eyebrow">Ask</p>
     <h2>Ask in plain English. Get an answer with its sources, or an honest "not supported".</h2>
     <div class="grid2">
       <div>
-        <div class="qa si"><p class="q">What oxygen fraction did the USML-1 solid surface experiment use?</p><p class="a">35% oxygen by volume.</p><p class="small" style="margin:0.6cqw 0 0"><span class="cite">FS-0001</span><span class="cite">C-0001</span> Unverified until a second person checks it.</p></div>
-        <div class="qa no"><p class="q">What is the weather in Paris today?</p><p class="a">The sources in this corpus do not support an answer.</p></div>
+        <div class="qa"><span class="tag si">SI answer</span><p class="q">What oxygen fraction did the USML-1 solid surface experiment use?</p><p class="a">35% oxygen by volume.</p><p class="small" style="margin:0.6cqw 0 0"><span class="cite">FS-0001</span><span class="cite">C-0001</span> Unverified until a second person checks it.</p></div>
+        <div class="qa"><span class="tag no">No supported answer</span><p class="q">What is the weather in Paris today?</p><p class="a">The sources in this corpus do not support an answer.</p></div>
       </div>
       <div>
         <p>Every answer cites a run or a source passage. A number is shown only if it matches a field in the run table, so the LLM cannot invent a spread rate.</p>
@@ -128,6 +141,7 @@
 
   <!-- 5. NASA data -->
   <section class="slide" aria-label="Slide 5 of 7: how NASA data makes it possible">
+    <p class="eyebrow">NASA data</p>
     <h2>Built entirely on open NASA data.</h2>
     <ol class="steps">
       <li><strong>Fetch</strong>NASA Technical Reports Server papers and Physical Sciences Informatics datasets (BASS, BASS-II, Saffire I to III)</li>
@@ -145,6 +159,7 @@
 
   <!-- 6. Findings -->
   <section class="slide" aria-label="Slide 6 of 7: what the data says">
+    <p class="eyebrow">What the evidence says</p>
     <h2>What the evidence says, and where it stops.</h2>
     <div class="finding"><div><h3>More oxygen and higher pressure make thin fuels burn faster.</h3><p>Shuttle runs over thin cellulose rose from 0.92 mm/s at 35% O₂ and 101.325 kPa to 5.47 mm/s at 50% O₂ and 202.650 kPa.</p></div><div class="cites"><span class="cite">FS-0001</span><span class="cite">FS-0005</span></div></div>
     <div class="finding"><div><h3>Thick plastic never settled into a steady spread rate.</h3><p>In all three thick-fuel shuttle flights the flame slowed with time, so short tests can mislead for thick materials.</p></div><div class="cites"><span class="cite">FS-0006</span><span class="cite">C-0007</span></div></div>
@@ -154,6 +169,7 @@
 
   <!-- 7. Future -->
   <section class="slide" aria-label="Slide 7 of 7: looking ahead">
+    <p class="eyebrow">What's next</p>
     <h2>A fire-safety evidence base crews can question before they choose the air they breathe.</h2>
     <div class="grid2">
       <div>
@@ -185,6 +201,7 @@
       document.getElementById("count").textContent = `${i + 1} / ${slides.length}`;
       history.replaceState(null, "", "#" + (i + 1));
       fit();
+      if (i === 0 && window.flameKick) setTimeout(window.flameKick);
     };
     const fit = () => {  // scale the live-site iframe to its frame
       const f = document.getElementById("frame"), fr = f && f.querySelector("iframe");
@@ -199,6 +216,35 @@
     addEventListener("resize", fit);
     show(i);
   })();
+  (() => {
+    const cv = document.getElementById("flame"); if (!cv) return;
+    const ctx = cv.getContext("2d"), still = matchMedia("(prefers-reduced-motion: reduce)").matches, ps = [];
+    let w = 0, h = 0, t = 0, raf = 0;
+    const spawn = () => ({ a: Math.random() * Math.PI * 2, r: 0.18 + Math.random() * 0.06, v: 0.0009 + Math.random() * 0.0016, warm: Math.random() < 0.18 });
+    const size = () => { const d = Math.min(2, devicePixelRatio || 1); w = cv.clientWidth; h = cv.clientHeight; cv.width = w * d; cv.height = h * d; ctx.setTransform(d, 0, 0, d, 0, 0); };
+    const frame = () => {
+      t++; const cx = w / 2, cy = h / 2, R = Math.min(w, h) / 2, k = 1 + Math.sin(t / 90) * 0.025;
+      ctx.clearRect(0, 0, w, h);
+      let g = ctx.createRadialGradient(cx, cy, R * 0.05, cx, cy, R * 0.62 * k);
+      g.addColorStop(0, "rgba(232,145,58,0.55)"); g.addColorStop(0.22, "rgba(140,120,200,0.35)"); g.addColorStop(0.5, "rgba(91,132,232,0.28)"); g.addColorStop(1, "rgba(91,132,232,0)");
+      ctx.fillStyle = g; ctx.beginPath(); ctx.arc(cx, cy, R * 0.62 * k, 0, 7); ctx.fill();
+      ctx.strokeStyle = "rgba(120,160,255,0.45)"; ctx.lineWidth = 1.2; ctx.beginPath(); ctx.arc(cx, cy, R * 0.34 * k, 0, 7); ctx.stroke();
+      g = ctx.createRadialGradient(cx, cy, 0, cx, cy, R * 0.12); g.addColorStop(0, "rgba(24,28,37,1)"); g.addColorStop(1, "rgba(24,28,37,0)");
+      ctx.fillStyle = g; ctx.beginPath(); ctx.arc(cx, cy, R * 0.12, 0, 7); ctx.fill();
+      if (ps.length < 520) for (let i = 0; i < 5; i++) ps.push(spawn());
+      for (let i = ps.length - 1; i >= 0; i--) {
+        const p = ps[i]; p.r += p.v; const life = 1 - (p.r - 0.18) / 0.82;
+        if (life <= 0) { ps.splice(i, 1); continue; }
+        ctx.fillStyle = p.warm ? `rgba(232,145,58,${0.8 * life})` : `rgba(160,190,255,${0.7 * life})`;
+        ctx.beginPath(); ctx.arc(cx + Math.cos(p.a) * p.r * R, cy + Math.sin(p.a) * p.r * R, p.warm ? 1.5 : 1.2, 0, 7); ctx.fill();
+      }
+      if (!still && cv.offsetParent) raf = requestAnimationFrame(frame);
+    };
+    window.flameKick = () => { cancelAnimationFrame(raf); size(); if (still) { for (let i = 0; i < 160; i++) { const p = spawn(); p.r += Math.random() * 0.7; ps.push(p); } } frame(); };
+    addEventListener("resize", () => window.flameKick());
+  })();
+  if (window.flameKick && location.hash.replace('#', '') <= '1') window.flameKick();
+
 </script>
 </body>
 </html>
