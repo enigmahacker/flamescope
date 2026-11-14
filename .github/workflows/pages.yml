@@ -1,3 +1,4 @@
+# SI-generated code: written by Claude (Anthropic) via Claude Code under team direction. Project idea: human (team).
 # Publishes the static dashboard in web/ to GitHub Pages. No secrets are used: the site is fully static.
 name: Deploy Flamescope to GitHub Pages
 on:

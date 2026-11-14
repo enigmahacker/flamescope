@@ -1,4 +1,6 @@
-"""Pipeline step 5: check the eval set and score retrieval (and, optionally, generated answers).
+"""SI-generated code: written by Claude (Anthropic) via Claude Code under team direction. Project idea: human (team).
+
+Pipeline step 5: check the eval set and score retrieval (and, optionally, generated answers).
 
 Usage: python3 -I scripts/eval.py [answers.json]
 answers.json format: {"Q01": {"answer": "...", "citations": ["FS-0001", "C-0001"], "refused": false}, ...}

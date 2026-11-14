@@ -1,4 +1,6 @@
-"""Embed chunks with the model in config.yaml and provide hybrid (BM25 + embedding) search.
+"""SI-generated code: written by Claude (Anthropic) via Claude Code under team direction. Project idea: human (team).
+
+Embed chunks with the model in config.yaml and provide hybrid (BM25 + embedding) search.
 
 Usage: .venv/bin/python scripts/embed.py   (after scripts/build.py; needs Hugging Face access to the gated model)
 """

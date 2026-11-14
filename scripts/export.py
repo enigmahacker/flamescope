@@ -1,4 +1,6 @@
-"""Pipeline step 6: validate insight cards and bundle everything the static dashboard needs.
+"""SI-generated code: written by Claude (Anthropic) via Claude Code under team direction. Project idea: human (team).
+
+Pipeline step 6: validate insight cards and bundle everything the static dashboard needs.
 
 Usage: python3 -I scripts/export.py   -> web/data.js (window.DATA = {...}; loads over file:// with no server)
 """

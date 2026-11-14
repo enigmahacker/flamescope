@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# SI-generated code: written by Claude (Anthropic) via Claude Code under team direction. Project idea: human (team).
 # Full offline pipeline: fetch -> extract -> build (validate, split, chunk, BM25) -> embed -> eval -> export dashboard.
 set -euo pipefail
 cd "$(dirname "$0")"

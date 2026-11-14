@@ -1,4 +1,6 @@
-"""Pipeline step 4b: offline LLM answers with Groq, grounded in retrieved runs and passages, then validated.
+"""SI-generated code: written by Claude (Anthropic) via Claude Code under team direction. Project idea: human (team).
+
+Pipeline step 4b: offline LLM answers with Groq, grounded in retrieved runs and passages, then validated.
 
 Usage: .venv/bin/python scripts/groq_generate.py
 Key: GROQ_API_KEY from the environment or a local .env file (gitignored). The key never leaves this machine

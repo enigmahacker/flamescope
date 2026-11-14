@@ -1,4 +1,5 @@
-/* Microgravity Fire Atlas: static dashboard over window.DATA (built by scripts/export.py). No network calls. */
+/* Flamescope: static dashboard over window.DATA (built by scripts/export.py).
+   SI-generated code: written by Claude (Anthropic) via Claude Code under team direction. Project idea: human (team). Network calls only in live AI mode, to api.groq.com with the visitor's own key. */
 (() => {
   const D = window.DATA;
   const $ = (s) => document.querySelector(s);
@@ -11,7 +12,6 @@
   const terms = (t) => (String(t).toLowerCase().match(/[a-z0-9]+(?:[.\-/][a-z0-9]+)*/g) || []).filter((w) => !STOP.has(w));
   const statusOf = (r) => (complete(r) ? r.verification_status : "excluded");
   const PLAT = { shuttle: "Space Shuttle", iss: "International Space Station", cygnus: "Cygnus (free-flyer)", drop_tower: "Drop tower", parabolic_flight: "Parabolic flight" };
-  const platColor = (p) => `var(--p-${["shuttle", "iss", "cygnus"].includes(p) ? p : "other"})`;
   const badge = (s) => `<span class="badge b-${esc(s)}">${esc(String(s).replace(/_/g, " "))}</span>`;
   const url = (u) => (/^https:\/\//.test(u || "") ? esc(u) : "#");  // source links: https only, never javascript: etc.
   const cite = (id) => `<button type="button" class="cite" data-cite="${esc(id)}">${esc(id)}</button>`;
@@ -48,16 +48,22 @@
   /* ---------- KPIs ---------- */
   const count = (f) => D.runs.filter(f).length;
   const kpis = [
-    ["Sources", D.manifest.length],
-    ["Runs in table", D.runs.length],
-    ["Verified", count((r) => r.verification_status === "checked_against_source" && complete(r))],
-    ["Pending check", count((r) => r.verification_status === "unverified" && complete(r))],
-    ["Excluded (missing field)", count((r) => !complete(r))],
-    ["Conflicts", count((r) => r.verification_status === "conflict_found")],
-    ["Passages", D.chunks.length],
+    ["runs in the table", D.runs.length],
+    ["verified by a second person", count((r) => r.verification_status === "checked_against_source" && complete(r))],
+    ["awaiting a check", count((r) => r.verification_status === "unverified" && complete(r))],
+    ["excluded for a missing field", count((r) => !complete(r))],
+    ["sources", D.manifest.length],
+    ["source passages", D.chunks.length],
   ];
   $("#kpis").innerHTML = kpis.map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join("");
   $("#snap").textContent = D.generated;
+  // Hero headline is computed from the tables so it can never drift from them.
+  const moon = D.atmosphere.find((a) => a.target_id === "ATM-MOON");
+  const withP = D.runs.filter((r) => r.total_pressure_kpa);
+  if (moon && withP.length) {
+    const minP = withP.reduce((m, r) => (+r.total_pressure_kpa < +m.total_pressure_kpa ? r : m)).total_pressure_kpa;
+    $("#hero-title").textContent = `Moon habitats are planned at ${moon.o2_fraction_pct}% oxygen and ${moon.total_pressure_kpa} kPa. No run here with a recorded pressure burned below ${minP} kPa.`;
+  }
 
   /* ---------- Tabs ---------- */
   const tabs = [...document.querySelectorAll('[role="tab"]')];
@@ -92,20 +98,20 @@
     let title = id, body = "";
     if (runs[id]) {
       const r = runs[id], d = docs[r.doc_id];
-      title = `${id} · ${r.experiment} ${r.sample ? "sample " + r.sample : ""}`;
+      title = `${id}: ${r.experiment}${r.sample ? ", sample " + r.sample : ""}`;
       const keys = ["verification_status", "mission", "platform", "fuel", "fuel_dimension_as_reported", "o2_fraction_pct", "o2_as_reported", "total_pressure_kpa", "pressure_as_reported", "flow_condition", "flow_velocity_m_s", "spread_rate_mm_s", "spread_rate_as_reported", "outcome", "outcome_notes", "source_location", "data_quality_flag", "extraction_method"];
       body = `<p>${badge(statusOf(r))} ${complete(r) ? "" : "<span class='note'>Missing a required field, so excluded from ranking.</span>"}</p>
         <dl>${keys.filter((k) => r[k]).map((k) => `<dt>${esc(k)}</dt><dd>${esc(r[k])}</dd>`).join("")}</dl>
         <p class="meta" style="margin-top:12px">Source: <a href="${url(r.source_url)}" target="_blank" rel="noopener">${esc(d ? d.title : r.source_url)}</a></p>`;
     } else if (chunks[id]) {
       const c = chunks[id], d = docs[c.doc_id];
-      title = `${id} · ${c.section}`;
+      title = `${id}: ${c.section}`;
       body = `<p>${esc(c.text)}</p>
-        <p class="meta">${esc(d.title)} · ${esc(c.page_or_paragraph)} · retrieved ${esc(c.date_retrieved)}${c.ai_assisted ? " · OCR cleanup AI-assisted" : ""}${c.chunk_type === "short_excerpt" ? " · short excerpt (copyright)" : ""}</p>
+        <p class="meta"><span>${esc(d.title)}</span><span>${esc(c.page_or_paragraph)}</span><span>Retrieved ${esc(c.date_retrieved)}</span>${c.ai_assisted ? "<span>OCR cleanup was SI-assisted</span>" : ""}${c.chunk_type === "short_excerpt" ? "<span>Short excerpt (copyright)</span>" : ""}</p>
         ${c.run_ids.length ? `<p class="meta">Runs: ${c.run_ids.map(cite).join("")}</p>` : ""}
-        <p><a href="${url(c.source_url)}" target="_blank" rel="noopener">Open full source</a>${c.doi ? ` · DOI ${esc(c.doi)}` : ""}</p>`;
+        <p><a href="${url(c.source_url)}" target="_blank" rel="noopener">Open the full source</a>${c.doi ? `, DOI ${esc(c.doi)}` : ""}</p>`;
     } else if (atm[id]) {
-      title = `${id} · ${atm[id].scenario}`;
+      title = `${id}: ${atm[id].scenario}`;
       body = `<dl>${Object.entries(atm[id]).filter(([, v]) => v).map(([k, v]) => `<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join("")}</dl>`;
     } else if (docs[id]) {
       const d = docs[id];
@@ -155,9 +161,9 @@
       out.innerHTML = `<div class="panel refuse"><h3>No supported answer</h3><p>The sources in this corpus do not support an answer to this question. The dashboard covers NASA microgravity flame-spread experiments and crew atmosphere targets only.</p></div>`;
       return;
     }
-    if (liveKey()) html += `<div id="live" class="panel si"><h3><span class="si-tag">SI · live</span> Asking ${esc(D.llm_model)} on Groq…</h3></div>`;
+    if (liveKey()) html += `<div id="live" class="panel si"><h3><span class="si-tag">SI, live</span> Asking ${esc(D.llm_model)} on Groq…</h3></div>`;
     const si = cur && D.llm ? D.llm.answers.find((a) => a.id === cur.id) : null;
-    if (si) html += siPanel(si, `SI-generated offline by ${D.llm.meta.generator}, ${D.llm.meta.generated_at}. Grounded in retrieved records; every number checked against the run table.`, "SI · offline");
+    if (si) html += siPanel(si, `SI-generated offline by ${D.llm.meta.generator}, ${D.llm.meta.generated_at}. Grounded in retrieved records; every number checked against the run table.`, "SI, offline");
     if (cur) {
       const ids = [...cur.gold_run_ids, ...cur.gold_chunk_ids];
       html += `<div class="panel curated"><h3>${cur.type === "unsupported" ? "What the sources can and cannot say" : "Curated answer"} ${badge(cur.type === "unsupported" ? "unverified" : answerStatus(cur.gold_run_ids))}</h3>
@@ -167,7 +173,7 @@
     if (ch.length) {
       html += `<div class="panel"><h3>Source passages</h3>${ch.map(([, id]) => {
         const c = chunks[id], d = docs[c.doc_id];
-        return `<div class="passage"><div class="meta">${cite(id)}<span>${esc(d.title)}</span><span>${esc(c.section)} · ${esc(c.page_or_paragraph)}</span></div><p>${highlight(c.text, q)}</p></div>`;
+        return `<div class="passage"><div class="meta">${cite(id)}<span>${esc(d.title)}</span><span>${esc(c.section)}, ${esc(c.page_or_paragraph)}</span></div><p>${highlight(c.text, q)}</p></div>`;
       }).join("")}</div>`;
     }
     if (rh.length) {
@@ -229,9 +235,9 @@
       if (!r.ok) throw new Error(r.status === 401 ? "the key was rejected (401)" : `Groq returned ${r.status}`);
       const a = JSON.parse((await r.json()).choices[0].message.content);
       Object.assign(a, checkAnswer(a));
-      if (slot()) slot().outerHTML = siPanel(a, `SI-generated live by ${D.llm_model} on Groq with your key. Checked in this browser against the run table.`, "SI · live").replace('class="panel si', 'id="live" class="panel si');
+      if (slot()) slot().outerHTML = siPanel(a, `SI-generated live by ${D.llm_model} on Groq with your key. Checked in this browser against the run table.`, "SI, live").replace('class="panel si', 'id="live" class="panel si');
     } catch (e) {
-      if (slot()) slot().innerHTML = `<h3><span class="si-tag">SI · live</span> Live answer unavailable</h3><p>${esc(e.message)}. Offline answers and sources below still apply.</p>`;
+      if (slot()) slot().innerHTML = `<h3><span class="si-tag">SI, live</span> Live answer unavailable</h3><p>${esc(e.message)}. Offline answers and sources below still apply.</p>`;
     }
   }
   function answerStatus(ids) {
@@ -244,9 +250,9 @@
   /* ---------- Run table ---------- */
   function runTable(list) {
     return `<div class="tablewrap"><table><thead><tr><th>Run</th><th>Status</th><th>Experiment</th><th>Mission / sample</th><th>Fuel</th><th>O₂ %</th><th>Pressure kPa</th><th>Flow m/s</th><th>Spread mm/s</th><th>Outcome</th><th>Flags</th></tr></thead><tbody>
-      ${list.map((r) => `<tr><td>${cite(r.run_id)}</td><td>${badge(statusOf(r))}</td><td>${esc(r.experiment)}</td><td>${esc([r.mission, r.sample].filter(Boolean).join(" · "))}</td><td>${esc(r.fuel)}</td>
+      ${list.map((r) => `<tr><td>${cite(r.run_id)}</td><td>${badge(statusOf(r))}</td><td>${esc(r.experiment)}</td><td>${esc([r.mission, r.sample && "sample " + r.sample].filter(Boolean).join(", "))}</td><td>${esc(r.fuel)}</td>
         <td class="num">${esc(r.o2_fraction_pct || "—")}</td><td class="num">${esc(r.total_pressure_kpa || "—")}</td><td class="num">${esc(r.flow_velocity_m_s || "—")}</td><td class="num">${esc(r.spread_rate_mm_s || "—")}</td>
-        <td>${esc(r.outcome || "—")}</td><td class="flags">${esc(r.data_quality_flag.replace(/; /g, " · "))}</td></tr>`).join("")}
+        <td>${esc(r.outcome || "—")}</td><td class="flags">${esc(r.data_quality_flag.replace(/_/g, " ").replace(/; /g, ", "))}</td></tr>`).join("")}
       </tbody></table></div>`;
   }
   function renderRuns() {
@@ -261,7 +267,7 @@
     const groups = {};
     for (const r of keep) (groups[r.platform_group] ||= []).push(r);
     $("#runs").innerHTML = Object.keys(groups).length ? Object.entries(groups).map(([g, list]) => `
-      <section class="group" data-group="${esc(g)}"><h2><span class="swatch" style="background:${platColor(g)}"></span>${esc(PLAT[g] || g)} <span class="note">${list.length} runs, shown as a separate group</span></h2>
+      <section class="group" data-group="${esc(g)}"><h2>${esc(PLAT[g] || g)}, ${list.length} runs</h2>
       ${runTable(list.slice(0, 40))}${list.length > 40 ? `<p class="more"><button type="button" class="chip" data-all="${esc(g)}">Show all ${list.length}</button></p>` : ""}</section>`).join("")
       : `<p class="note">No runs match these filters.</p>`;
     for (const b of document.querySelectorAll("[data-all]")) b.onclick = () => {
@@ -280,9 +286,9 @@
   function renderCards() {
     const v = document.querySelector('input[name="qa"]:checked').value;
     $("#cards").innerHTML = D.cards.filter((c) => v === "all" || c.question_answered === v).map((c) => `
-      <article class="card"><div class="meta">${badge(c.status)} <span class="badge b-tag">${esc(c.question_answered)}</span> <span>${esc(c.id)}</span></div>
-        <h3>${esc(c.title)}</h3><p>${esc(c.claim)}</p><p class="impl">${esc(c.implication)}</p>
-        <div class="cites meta">Cites ${c.citations.map(cite).join("")}</div></article>`).join("");
+      <article class="card"><div class="side">${badge(c.status)}<span>For ${esc(c.question_answered)} decisions</span><span>${esc(c.id)}, drafted with SI</span></div>
+        <div><h3>${esc(c.title)}</h3><p>${esc(c.claim)}</p><p class="impl">${esc(c.implication)}</p>
+        <div class="meta">Cites ${c.citations.map(cite).join("")}</div></div></article>`).join("");
   }
   renderCards();
 
@@ -304,39 +310,49 @@
     else if (t.status !== "confirmed") warn += `<div class="banner warn">Target is cited (${cite(t.source_doc_id)}) but awaiting team lead confirmation.</div>`;
     if (preview) warn += `<div class="banner warn">Preview includes unverified runs. Unverified numbers have not been checked against the source by a second person.</div>`;
     $("#rank-warn").innerHTML = warn;
-    $("#ranked").innerHTML = ranked.length ? ranked.map((r) => `<li>${cite(r.run_id)} <strong>${esc(r.experiment)}</strong> ${badge(statusOf(r))}
-        <div class="meta">${esc(r.fuel)} · ${esc(r.o2_fraction_pct)}% O₂ · ${esc(r.total_pressure_kpa)} kPa${r.spread_rate_mm_s ? ` · ${esc(r.spread_rate_mm_s)} mm/s` : ""} · ${esc(r.mission || "mission not stated")}</div></li>`).join("")
-      : `<li style="padding-left:12px"><strong>No verified runs yet.</strong><div class="meta">Runs enter the ranked view after a second person checks each number against the source. Conflict rows never enter it. Turn on the preview to see pending runs.</div></li>`;
-    $("#ranked").style.counterReset = "r";
-    drawPlot(t, pool.length ? pool : [], preview);
+    $("#ranked").innerHTML = ranked.length ? ranked.map((r) => `<li class="rank">${cite(r.run_id)} <strong>${esc(r.experiment)}</strong> ${badge(statusOf(r))}
+        <div class="meta"><span>${esc(r.fuel)}</span><span>${esc(r.o2_fraction_pct)}% O₂</span><span>${esc(r.total_pressure_kpa)} kPa</span>${r.spread_rate_mm_s ? `<span>${esc(r.spread_rate_mm_s)} mm/s</span>` : ""}<span>${esc(r.mission || "Mission not stated")}</span></div></li>`).join("")
+      : `<li class="empty"><strong>No verified runs yet.</strong><div class="meta">Runs enter the ranked view after a second person checks each number against the source. Conflict rows never enter it. Turn on the preview to see pending runs.</div></li>`;
+    drawPlot($("#plot"), t);
   }
-  function drawPlot(sel, pool, preview) {
-    const W = 560, H = 340, m = { l: 46, r: 16, t: 14, b: 40 };
+  // Evidence map. Colour encodes oxygen (flame blue to soot amber, as the SSCE flames turned from blue to orange with
+  // more oxygen, C-0004); fill encodes verification. Shared by the hero (sel = null) and the Rank tab.
+  function flameColor(o2, lo, hi) {
+    const t = hi > lo ? Math.min(1, Math.max(0, (o2 - lo) / (hi - lo))) : 0;
+    return `color-mix(in oklch, var(--flame) ${Math.round((1 - t) * 100)}%, var(--soot))`;
+  }
+  function drawPlot(el, sel) {
+    const W = 600, H = 360, m = { l: 48, r: 24, t: 18, b: 44 };
     const pts = D.runs.filter((r) => complete(r) && r.verification_status !== "conflict_found");
     const xs = [...pts.map((r) => +r.total_pressure_kpa), ...T.map((t) => +t.total_pressure_kpa)];
     const ys = [...pts.map((r) => +r.o2_fraction_pct), ...T.map((t) => +t.o2_fraction_pct)];
     const xMax = Math.ceil(Math.max(...xs) / 50) * 50 + 25, yMax = Math.ceil(Math.max(...ys) / 10) * 10 + 5;
     const X = (v) => m.l + (v / xMax) * (W - m.l - m.r), Y = (v) => H - m.b - (v / yMax) * (H - m.t - m.b);
+    const o2s = pts.map((r) => +r.o2_fraction_pct), lo = Math.min(...o2s), hi = Math.max(...o2s);
     let g = "";
-    for (let v = 0; v <= xMax; v += 50) g += `<line class="axis" x1="${X(v)}" x2="${X(v)}" y1="${m.t}" y2="${H - m.b}"/><text x="${X(v)}" y="${H - m.b + 16}" text-anchor="middle">${v}</text>`;
-    for (let v = 0; v <= yMax; v += 10) g += `<line class="axis" x1="${m.l}" x2="${W - m.r}" y1="${Y(v)}" y2="${Y(v)}"/><text x="${m.l - 8}" y="${Y(v) + 4}" text-anchor="end">${v}</text>`;
-    g += `<text x="${(W + m.l) / 2}" y="${H - 6}" text-anchor="middle">Total pressure (kPa)</text><text transform="translate(12 ${H / 2}) rotate(-90)" text-anchor="middle">O₂ (% by volume)</text>`;
-    const seen = {};
-    for (const r of pts) {
-      const k = `${r.total_pressure_kpa}|${r.o2_fraction_pct}|${r.platform}`;
-      seen[k] = (seen[k] || 0) + 1;
-      const off = (seen[k] - 1) * 5, ver = r.verification_status === "checked_against_source";
-      g += `<circle cx="${X(+r.total_pressure_kpa) + off}" cy="${Y(+r.o2_fraction_pct)}" r="6" fill="${ver ? platColor(r.platform) : "var(--panel)"}" stroke="${platColor(r.platform)}" stroke-width="2"><title>${esc(r.run_id)} ${esc(r.experiment)}: ${esc(r.o2_fraction_pct)}% O₂, ${esc(r.total_pressure_kpa)} kPa (${esc(r.verification_status)})</title></circle>`;
-    }
+    for (let v = 0; v <= xMax; v += 50) g += `<line class="grid" x1="${X(v)}" x2="${X(v)}" y1="${m.t}" y2="${H - m.b}"/><text x="${X(v)}" y="${H - m.b + 18}" text-anchor="middle">${v}</text>`;
+    for (let v = 0; v <= yMax; v += 10) g += `<line class="grid" x1="${m.l}" x2="${W - m.r}" y1="${Y(v)}" y2="${Y(v)}"/><text x="${m.l - 8}" y="${Y(v) + 4}" text-anchor="end">${v}</text>`;
+    g += `<text class="axis-label" x="${W - m.r}" y="${H - 6}" text-anchor="end">Total pressure, kPa</text><text class="axis-label" x="${m.l}" y="${m.t - 6}">Oxygen, % by volume</text>`;
+    const minP = Math.min(...pts.map((r) => +r.total_pressure_kpa));
+    g += `<line class="gap" x1="${X(minP)}" x2="${X(minP)}" y1="${m.t}" y2="${H - m.b}"><title>Lowest pressure with a run: ${esc(String(minP))} kPa</title></line>`;
     for (const t of T) {
-      const on = t.target_id === sel.target_id, x = X(+t.total_pressure_kpa), y = Y(+t.o2_fraction_pct);
-      g += `<g opacity="${on ? 1 : 0.45}"><circle class="target" cx="${x}" cy="${y}" r="11" ${t.source_url ? "" : 'stroke-dasharray="3 3"'}/><line class="target" x1="${x - 16}" x2="${x + 16}" y1="${y}" y2="${y}"/><line class="target" x1="${x}" x2="${x}" y1="${y - 16}" y2="${y + 16}"/>
-        <text class="tlabel" x="${x + 16}" y="${y - 12}">${esc(t.scenario.split(" (")[0].replace(" surface habitat / lander", ""))}</text></g>`;
+      const on = !sel || t.target_id === sel.target_id, x = X(+t.total_pressure_kpa), y = Y(+t.o2_fraction_pct);
+      const left = +t.total_pressure_kpa < minP;  // targets below every tested pressure get their label above, clear of the axis and the data
+      const name = t.target_id === "ATM-MOON" ? "Moon habitat" : t.target_id === "ATM-MARS" ? "Mars transit" : t.target_id;
+      g += `<g opacity="${on ? 1 : 0.35}"><circle class="target-zone" cx="${x}" cy="${y}" r="22"/><circle class="target" cx="${x}" cy="${y}" r="14" ${t.source_url ? "" : 'stroke-dasharray="3 3"'}/>
+        <text class="tlabel" x="${left ? x : x + 12}" y="${left ? y - 42 : y + 30}" text-anchor="${left ? "middle" : "start"}">${esc(name)}</text><text class="tsub" x="${left ? x : x + 12}" y="${left ? y - 27 : y + 45}" text-anchor="${left ? "middle" : "start"}">${esc(t.o2_fraction_pct)}% O₂, ${esc(t.total_pressure_kpa)} kPa${t.source_url ? "" : ", uncited"}</text></g>`;
     }
-    const plats = [...new Set(pts.map((r) => r.platform))];
-    $("#plot").innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Scatter of run oxygen against pressure with mission targets">${g}</svg>
-      <div class="legend">${plats.map((p) => `<span><span class="swatch" style="background:${platColor(p)}"></span> ${esc(PLAT[p] || p)}</span>`).join("")}<span>Hollow = unverified · filled = verified · crosshair = mission target (dashed = uncited)</span></div>`;
+    const seen = {};
+    pts.forEach((r) => {
+      const k = `${r.total_pressure_kpa}|${r.o2_fraction_pct}`;
+      seen[k] = (seen[k] || 0) + 1;
+      const off = (seen[k] - 1) * 7, ver = r.verification_status === "checked_against_source", c = flameColor(+r.o2_fraction_pct, lo, hi);
+      g += `<circle class="pt" style="stroke:${c};fill:${ver ? c : "var(--surface)"}" cx="${X(+r.total_pressure_kpa) + off}" cy="${Y(+r.o2_fraction_pct)}" r="7"><title>${esc(r.run_id)} ${esc(r.experiment)}: ${esc(r.o2_fraction_pct)}% O₂, ${esc(r.total_pressure_kpa)} kPa, ${esc(r.verification_status.replace(/_/g, " "))}</title></circle>`;
+    });
+    el.innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Runs plotted by oxygen and pressure, with the Moon and Mars cabin targets">${g}</svg>
+      <div class="legend"><span class="scale">${esc(String(lo))}% O₂ <i></i> ${esc(String(hi))}% O₂</span><span><span class="dot"></span>Awaiting a check</span><span><span class="dot filled"></span>Verified</span><span>Dashed ring: target without a citation</span></div>`;
   }
+  drawPlot($("#hero-map"), null);
   renderRank();
 
   /* ---------- Atmospheres, sources, eval ---------- */
@@ -360,11 +376,12 @@
     <li>Interpret: a Groq-hosted LLM answers questions from retrieved records only. An answer is shown only if every number in it matches a cited run.</li></ol>
     <h2>Use of super intelligence (SI)</h2>
     <ul>
-      <li><strong>Code:</strong> the pipeline scripts and this website were written with SI assistance (Claude by Anthropic, via Claude Code) and reviewed by the team.</li>
+      <li><strong>Code and design:</strong> the pipeline scripts, this website and its design system were generated by SI (Claude by Anthropic, via Claude Code) under the team's direction. Every code file says so in its header.</li>
       <li><strong>Data extraction:</strong> run rows from paper text (marked <code>ai_assisted_extraction_from_ntrs_ocr_text</code>) and OCR clean-up of excerpts (marked <code>ai_assisted: true</code>) were done with SI assistance. Rows from PSI tables were mapped by deterministic script. Every row is <em>unverified</em> until a human checks it.</li>
       <li><strong>Insight cards:</strong> drafted with SI assistance (Claude) and validated by script. Any number not found in the cited rows blocks the card.</li>
-      <li><strong>Answers:</strong> panels tagged <span class="si-tag">SI · offline</span> were generated by ${esc(D.llm ? D.llm.meta.generator : "a Groq-hosted LLM (" + D.llm_model + ")")} before publishing. Panels tagged <span class="si-tag">SI · live</span> are generated in your browser with your own key. Curated answers in the evaluation set were drafted with SI assistance from the tables.</li>
-      <li><strong>Not SI-generated:</strong> the project idea and challenge approach, the verification rules, and the source data itself. No images, audio or video in this site are SI-generated.</li>
+      <li><strong>Answers:</strong> panels tagged <span class="si-tag">SI, offline</span> were generated by ${esc(D.llm ? D.llm.meta.generator : "a Groq-hosted LLM (" + D.llm_model + ")")} before publishing. Panels tagged <span class="si-tag">SI, live</span> are generated in your browser with your own key. Curated answers in the evaluation set were drafted with SI assistance from the tables.</li>
+      <li><strong>Human, not SI:</strong> the project idea and the approach to the challenge came from the team. So did the key decisions: verification rules, model choices, how the Groq key is handled, the Flamescope name. The source data comes from NASA. No images, audio or video in this site are SI-generated.</li>
+      <li>Full SI disclosure, per file: <a href="https://github.com/enigmahacker/flamescope/blob/main/DOCUMENTATION.md#use-of-super-intelligence-si">DOCUMENTATION.md</a>. All sources with URLs: <a href="https://github.com/enigmahacker/flamescope/blob/main/SOURCES.md">SOURCES.md</a>.</li>
     </ul>
     <h2>NASA data and resources used</h2>
     <ul>${nasaDocs}</ul>
@@ -382,7 +399,7 @@
   $("#eval").innerHTML = (R ? `<div class="metrics">
       <div class="panel"><h3>Retrieval hit rate</h3><p>${pct(R.retrieval_hit_rate)} of ${esc(R.retrieval_scored)} questions with a gold passage (BM25, top-5)</p></div>
       <div class="panel"><h3>Off-topic refusal</h3><p>${pct(R.off_topic_refusal_rate)} refused by retrieval alone</p></div>
-      <div class="panel"><h3>Number and citation accuracy</h3><p>${R.answers ? `${pct(R.answers.number_accuracy)} numbers · ${pct(R.answers.citation_accuracy)} citations` : "Scored when the ML engineer's generated answers are passed to scripts/eval.py"}</p></div></div>` : "")
+      <div class="panel"><h3>Number and citation accuracy</h3><p>${R.answers ? `${pct(R.answers.number_accuracy)} of numbers match the table, ${pct(R.answers.citation_accuracy)} of citations support the claim` : "Scored once Groq answers are generated (scripts/groq_generate.py)"}</p></div></div>` : "")
     + `<div class="tablewrap"><table><thead><tr><th>ID</th><th>Type</th><th>Question</th><th>Gold answer</th><th>Gold citations</th><th>BM25 result</th></tr></thead><tbody>
     ${D.eval.map((q) => { const p = per[q.id] || {}; const res = p.hit === true || p.refused === true ? badge("verified").replace(/>[^<]+</, ">pass<") : p.hit === false || p.refused === false ? badge("conflict_found").replace(/>[^<]+</, ">miss<") : "—";
       return `<tr><td>${esc(q.id)}</td><td>${esc(q.type)}</td><td>${esc(q.question)}</td><td>${esc(q.gold_answer)}</td><td>${[...q.gold_run_ids, ...q.gold_chunk_ids].map(cite).join("") || "—"}</td><td>${res}</td></tr>`; }).join("")}</tbody></table></div>`;

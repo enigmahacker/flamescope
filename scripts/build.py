@@ -1,4 +1,6 @@
-"""Validate runs.csv, split by verification status, build chunks.jsonl.
+"""SI-generated code: written by Claude (Anthropic) via Claude Code under team direction. Project idea: human (team).
+
+Validate runs.csv, split by verification status, build chunks.jsonl.
 
 Usage: python3 -I scripts/build.py   (run from project root)
 Stdlib only. Fails loudly (assert) on contract violations.

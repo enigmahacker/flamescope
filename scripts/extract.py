@@ -1,4 +1,6 @@
-"""Pipeline step 2: map PSI experimental tables to run rows (data/runs_psi.csv).
+"""SI-generated code: written by Claude (Anthropic) via Claude Code under team direction. Project idea: human (team).
+
+Pipeline step 2: map PSI experimental tables to run rows (data/runs_psi.csv).
 
 Usage: python3 -I scripts/extract.py
 Rules: copy only what the table states. No pressure column in a table -> pressure blank + flag

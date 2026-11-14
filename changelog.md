@@ -49,3 +49,11 @@
 - Added `.gitignore`. It keeps out `.env`, `.venv`, and the full text of the two NTRS papers flagged as possibly containing copyrighted material. Only short excerpts of those papers are published.
 - Added `.github/workflows/pages.yml` to publish `web/` to GitHub Pages.
 - Not done yet: Groq answers have not been generated, because there is no key on this machine. The site shows source retrieval and curated answers until `./pipeline.sh` runs with `GROQ_API_KEY` set.
+- Redesigned the dashboard using the frontend-design and design-system skills (SI-generated, at the user's request).
+  - New tokens (`design-tokens.json`, `DESIGN.md`): chamber-paper and ink chrome, flame blue to soot amber for data, Spectral with IBM Plex Sans Condensed.
+  - The hero is now an evidence map with a headline computed from the tables (the lunar-pressure gap). Insights are a list rather than a card grid.
+  - Removed the terracotta accent, shadowed cards, `·`-joined meta, uppercase badges, and monospace ID pills, because they are generic defaults.
+  - Removed a load-in animation on the map dots, because it left them unpainted in Chromium.
+- Added SI disclosure everywhere: a header line in every code file, HTML meta tags, the About tab, and `DOCUMENTATION.md` section 2 (a per-artifact table). The project idea is recorded as human. Reason: the user asked for it, and the Space Apps guide requires acknowledging SI in text and metadata.
+- Added `SOURCES.md`, which lists every NASA source, API endpoint, model, library, font, and hosting service with its URL. Reason: the user asked for it, and the guide asks for all references.
+- Added `CLAUDE.md`, a project memory for teammates' coding agents: data contract, current state, and the backend spec (FastAPI with `/api/ask` holding the Groq key, plus the verification workflow). Reason: the user's teammates will build the backend.

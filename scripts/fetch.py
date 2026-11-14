@@ -1,4 +1,6 @@
-"""Pipeline step 1: download every manifest source into raw/.
+"""SI-generated code: written by Claude (Anthropic) via Claude Code under team direction. Project idea: human (team).
+
+Pipeline step 1: download every manifest source into raw/.
 
 Usage: python3 -I scripts/fetch.py [--force]
 Only documents listed in data/manifest.csv are fetched (no manifest entry, no ingest).
