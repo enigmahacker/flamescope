@@ -1,0 +1,200 @@
+<!doctype html>
+<!-- SI-generated code and copy: written by Claude (Anthropic) via Claude Code under team direction. Project idea: human (team). -->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Flamescope demo deck</title>
+  <meta name="description" content="Seven-slide NASA Space Apps 2026 demo deck for Flamescope.">
+  <meta name="ai-assistance" content="Deck copy and code drafted by SI (Claude by Anthropic) under team direction. Project idea: human (team). No SI-generated images.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@400;500;600&family=Spectral:wght@400;500;600&display=swap">
+  <style>
+    /* Tokens mirror design-tokens.json */
+    :root { --paper:#f2f4f7; --surface:#fff; --ink:#18233a; --ink-2:#4b5670; --rule:#d6dce6; --flame:#2d5bd0; --soot:#d9902a; --ember:#b0384a; --verified:#1e7559;
+      --serif:"Spectral",Georgia,serif; --sans:"IBM Plex Sans Condensed","Arial Narrow",Arial,sans-serif; }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; height: 100%; background: #dfe3ea; color: var(--ink); }
+    body { display: grid; place-items: center; font-family: var(--serif); }
+    .deck { width: min(100vw, 177.78vh); aspect-ratio: 16 / 9; position: relative; }
+    .slide { position: absolute; inset: 0; background: var(--paper); container-type: inline-size; padding: 5.5cqw 6cqw 4.5cqw; display: none; flex-direction: column; overflow: hidden; }
+    .slide.on { display: flex; }
+    .brand { display: flex; align-items: center; gap: 0.8cqw; font: 600 1.5cqw/1 var(--sans); }
+    .brand svg { width: 2cqw; height: 2cqw; }
+    h1 { font: 500 5.2cqw/1.08 var(--serif); letter-spacing: -0.015em; margin: 0; max-width: 17ch; }
+    h2 { font: 500 3.4cqw/1.12 var(--serif); letter-spacing: -0.01em; margin: 0 0 2.2cqw; max-width: 26ch; }
+    p, li { font-size: 1.75cqw; line-height: 1.45; }
+    .small { font: 1.35cqw/1.45 var(--sans); color: var(--ink-2); }
+    .foot { margin-top: auto; display: flex; justify-content: space-between; gap: 2cqw; font: 1.1cqw/1.3 var(--sans); color: var(--ink-2); border-top: 1px solid var(--rule); padding-top: 1cqw; }
+    .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 4cqw; align-items: start; }
+    .facts { display: grid; grid-template-columns: max-content 1fr; gap: 0.8cqw 2cqw; margin: 3cqw 0 0; font: 1.7cqw/1.35 var(--sans); }
+    .facts dt { color: var(--ink-2); }
+    .facts dd { margin: 0; }
+    .fill { background: #fbf0de; outline: 1px dashed var(--soot); padding: 0 0.4cqw; }
+    .big { font: 600 5.5cqw/1 var(--sans); font-variant-numeric: tabular-nums; }
+    .stat { border-top: 1px solid var(--rule); padding-top: 1.2cqw; }
+    .stat .lbl { font: 1.4cqw/1.35 var(--sans); color: var(--ink-2); margin-top: 0.5cqw; }
+    .frame { border: 1px solid var(--rule); border-radius: 0.5cqw; overflow: hidden; background: var(--surface); position: relative; height: 31cqw; }
+    .frame iframe { border: 0; width: 1560px; height: 900px; transform-origin: 0 0; pointer-events: none; }
+    .qa { background: var(--surface); border: 1px solid var(--rule); border-radius: 0.5cqw; padding: 1.6cqw 2cqw; margin-bottom: 1.4cqw; }
+    .qa .q { font: 600 1.6cqw/1.35 var(--sans); margin: 0 0 0.6cqw; }
+    .qa .a { margin: 0; font-size: 1.75cqw; }
+    .qa.si { border-left: 0.35cqw solid var(--flame); }
+    .qa.no { border-left: 0.35cqw solid var(--soot); }
+    .cite { display: inline-block; font: 500 1.25cqw/1.5 var(--sans); border: 1px solid var(--rule); border-radius: 0.3cqw; padding: 0 0.5cqw; margin-right: 0.4cqw; background: var(--paper); }
+    ol.steps { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(5, 1fr); gap: 1.6cqw; counter-reset: s; }
+    ol.steps li { counter-increment: s; border-top: 0.3cqw solid var(--flame); padding-top: 1.2cqw; font: 1.5cqw/1.4 var(--sans); }
+    ol.steps li::before { content: counter(s); display: block; font: 600 2.6cqw/1 var(--sans); color: var(--flame); margin-bottom: 0.8cqw; }
+    ol.steps strong { display: block; font-size: 1.75cqw; margin-bottom: 0.4cqw; }
+    .finding { border-top: 1px solid var(--rule); padding: 1.4cqw 0; display: grid; grid-template-columns: 1fr 15cqw; gap: 2cqw; }
+    .finding h3 { font: 500 2.1cqw/1.25 var(--serif); margin: 0 0 0.5cqw; }
+    .finding p { margin: 0; font-size: 1.55cqw; color: var(--ink-2); }
+    .finding .cites { font: 1.25cqw var(--sans); color: var(--ink-2); align-self: center; }
+    a { color: var(--flame); }
+    .nav { position: fixed; bottom: 12px; right: 16px; display: flex; gap: 8px; align-items: center; font: 14px var(--sans); color: var(--ink-2); }
+    .nav button { font: 600 14px var(--sans); border: 1px solid var(--rule); background: var(--surface); color: var(--ink); border-radius: 4px; padding: 6px 12px; cursor: pointer; }
+    .nav button:focus-visible { outline: 2px solid var(--flame); outline-offset: 2px; }
+    @media print {
+      @page { size: 1600px 900px; margin: 0; }
+      html, body { background: none; display: block; height: auto; }
+      .deck { width: 1600px; aspect-ratio: auto; }
+      .slide { position: relative; display: flex !important; width: 1600px; height: 900px; break-after: page; }
+      .nav, .frame iframe { display: none; }
+      .frame::after { content: "Live site: enigmahacker.github.io/flamescope"; position: absolute; inset: 0; display: grid; place-items: center; font: 2cqw var(--sans); color: var(--ink-2); }
+    }
+  </style>
+</head>
+<body>
+<main class="deck" aria-roledescription="slide deck">
+
+  <!-- 1. Title -->
+  <section class="slide" aria-label="Slide 1 of 7: title">
+    <div class="brand"><svg viewBox="0 0 32 32" aria-hidden="true"><defs><radialGradient id="fl" cx="50%" cy="58%" r="55%"><stop offset="0" stop-color="#d9902a"/><stop offset=".45" stop-color="#7f8fd8"/><stop offset="1" stop-color="#2d5bd0"/></radialGradient></defs><circle cx="16" cy="16" r="13" fill="url(#fl)" opacity=".22"/><circle cx="16" cy="17" r="9" fill="url(#fl)"/><circle cx="16" cy="18.5" r="3.2" fill="#18233a"/></svg>Flamescope</div>
+    <div style="margin-top:auto">
+      <h1>How fire behaves off Earth, and what that means for crews on the Moon and Mars.</h1>
+      <dl class="facts">
+        <dt>Team</dt><dd><span class="fill">[Team name]</span></dd>
+        <dt>Members</dt><dd><span class="fill">[Member names]</span></dd>
+        <dt>Challenge</dt><dd>NASA Space Apps 2026: an SI-powered dashboard that summarizes, ranks, and interprets NASA microgravity fire findings for human exploration</dd>
+      </dl>
+    </div>
+    <div class="foot" style="margin-top:4cqw"><span>enigmahacker.github.io/flamescope</span><span>Deck drafted with SI (Claude). Project idea: human (team).</span></div>
+  </section>
+
+  <!-- 2. Problem -->
+  <section class="slide" aria-label="Slide 2 of 7: the problem">
+    <h2>NASA has decades of fire experiments in space. They are hard to find, compare, or trust at a glance.</h2>
+    <div class="grid2">
+      <div>
+        <p>Results sit in scanned conference papers and dataset tables, each with its own units and conditions. A mission planner who asks "how fast does fire spread in our cabin air?" has to read dozens of PDFs.</p>
+        <p>And the question is changing. Moon habitats are planned at lower pressure with more oxygen than the ISS.</p>
+      </div>
+      <div>
+        <div class="stat"><div class="big">34% oxygen</div><div class="lbl">at 56.537 kPa: the planned lunar habitat atmosphere (NASA/TM-2013-217377)</div></div>
+        <div class="stat" style="margin-top:2cqw"><div class="big">101.325 kPa</div><div class="lbl">the lowest pressure at which any run in our table burned</div></div>
+      </div>
+    </div>
+    <div class="foot"><span>Flamescope</span><span>Deck drafted with SI (Claude). Project idea: human (team).</span></div>
+  </section>
+
+  <!-- 3. Product -->
+  <section class="slide" aria-label="Slide 3 of 7: the product">
+    <h2>Flamescope puts every run on one map, with its source one click away.</h2>
+    <div class="frame" id="frame"><iframe src="index.html" title="Flamescope live site" tabindex="-1" loading="lazy"></iframe></div>
+    <p class="small" style="margin-top:1.2cqw">The live site: runs plotted by oxygen and pressure, colored from blue to amber as oxygen rises (as the flames themselves did), with Moon and Mars targets ringed. Hollow means awaiting a second-person check.</p>
+    <div class="foot"><span>Flamescope</span><span>Live embed of the real site, not SI-generated imagery.</span></div>
+  </section>
+
+  <!-- 4. User experience -->
+  <section class="slide" aria-label="Slide 4 of 7: user experience">
+    <h2>Ask in plain English. Get an answer with its sources, or an honest "not supported".</h2>
+    <div class="grid2">
+      <div>
+        <div class="qa si"><p class="q">What oxygen fraction did the USML-1 solid surface experiment use?</p><p class="a">35% oxygen by volume.</p><p class="small" style="margin:0.6cqw 0 0"><span class="cite">FS-0001</span><span class="cite">C-0001</span> Unverified until a second person checks it.</p></div>
+        <div class="qa no"><p class="q">What is the weather in Paris today?</p><p class="a">The sources in this corpus do not support an answer.</p></div>
+      </div>
+      <div>
+        <p>Every answer cites a run or a source passage. A number is shown only if it matches a field in the run table, so the LLM cannot invent a spread rate.</p>
+        <p>Click a citation to see the exact row or passage and the NASA link it came from.</p>
+      </div>
+    </div>
+    <div class="foot"><span>Flamescope</span><span>Answers generated by a Groq-hosted LLM and labeled SI on the site.</span></div>
+  </section>
+
+  <!-- 5. NASA data -->
+  <section class="slide" aria-label="Slide 5 of 7: how NASA data makes it possible">
+    <h2>Built entirely on open NASA data.</h2>
+    <ol class="steps">
+      <li><strong>Fetch</strong>NASA Technical Reports Server papers and Physical Sciences Informatics datasets (BASS, BASS-II, Saffire I to III)</li>
+      <li><strong>Extract</strong>One row per experiment run, in kPa, mm/s and m/s, keeping the value as reported</li>
+      <li><strong>Validate</strong>Missing fields exclude a run, never rank it low; a second person checks every number</li>
+      <li><strong>Retrieve</strong>Source passages and runs searched in the browser, with no server needed</li>
+      <li><strong>Interpret</strong>An LLM answers only from retrieved records; unmatched numbers are rejected</li>
+    </ol>
+    <div class="grid2" style="margin-top:3cqw">
+      <div class="stat"><div class="big">275</div><div class="lbl">experiment runs in one table, each linked to its NASA source</div></div>
+      <div class="stat"><div class="big">10</div><div class="lbl">NASA sources: 4 technical reports and 6 PSI datasets, every license recorded</div></div>
+    </div>
+    <div class="foot"><span>Flamescope</span><span>Pipeline code generated with SI (Claude) under team direction.</span></div>
+  </section>
+
+  <!-- 6. Findings -->
+  <section class="slide" aria-label="Slide 6 of 7: what the data says">
+    <h2>What the evidence says, and where it stops.</h2>
+    <div class="finding"><div><h3>More oxygen and higher pressure make thin fuels burn faster.</h3><p>Shuttle runs over thin cellulose rose from 0.92 mm/s at 35% O₂ and 101.325 kPa to 5.47 mm/s at 50% O₂ and 202.650 kPa.</p></div><div class="cites"><span class="cite">FS-0001</span><span class="cite">FS-0005</span></div></div>
+    <div class="finding"><div><h3>Thick plastic never settled into a steady spread rate.</h3><p>In all three thick-fuel shuttle flights the flame slowed with time, so short tests can mislead for thick materials.</p></div><div class="cites"><span class="cite">FS-0006</span><span class="cite">C-0007</span></div></div>
+    <div class="finding"><div><h3>Nothing here was burned at lunar habitat pressure.</h3><p>The Moon target is 34% O₂ at 56.537 kPa; no run in the table was flown below 101.325 kPa. That is the top data need.</p></div><div class="cites"><span class="cite">FS-0001</span><span class="cite">C-0010</span></div></div>
+    <div class="foot"><span>Flamescope</span><span>Findings drafted with SI and checked by script against the run table.</span></div>
+  </section>
+
+  <!-- 7. Future -->
+  <section class="slide" aria-label="Slide 7 of 7: looking ahead">
+    <h2>A fire-safety evidence base crews can question before they choose the air they breathe.</h2>
+    <div class="grid2">
+      <div>
+        <p>Next: every run checked by a second person, live answers from a server that holds the key, more NASA and partner-agency sources, and partial-gravity experiments as they fly.</p>
+        <p>The same approach works for any body of space-science results: one row per experiment, every claim cited, and honest gaps.</p>
+      </div>
+      <div>
+        <p class="small"><strong>Try it:</strong> <a href="https://enigmahacker.github.io/flamescope/">enigmahacker.github.io/flamescope</a></p>
+        <p class="small"><strong>Code and sources:</strong> <a href="https://github.com/enigmahacker/flamescope">github.com/enigmahacker/flamescope</a></p>
+        <p class="small"><strong>SI use:</strong> code, data extraction, insight drafts, answers and this deck were produced with SI (Claude; Groq-hosted LLM) under team direction and are labeled throughout. The project idea is the team's own.</p>
+      </div>
+    </div>
+    <div class="foot"><span>Flamescope</span><span>Data: NASA NTRS and NASA Physical Sciences Informatics (CC0-1.0).</span></div>
+  </section>
+
+</main>
+<nav class="nav" aria-label="Slide navigation">
+  <button type="button" id="prev" aria-label="Previous slide">Previous</button>
+  <span id="count" aria-live="polite"></span>
+  <button type="button" id="next" aria-label="Next slide">Next</button>
+</nav>
+<script>
+  (() => {
+    const slides = [...document.querySelectorAll(".slide")];
+    let i = Math.min(slides.length - 1, Math.max(0, (parseInt(location.hash.slice(1), 10) || 1) - 1));
+    const show = (n) => {
+      i = Math.min(slides.length - 1, Math.max(0, n));
+      slides.forEach((s, k) => s.classList.toggle("on", k === i));
+      document.getElementById("count").textContent = `${i + 1} / ${slides.length}`;
+      history.replaceState(null, "", "#" + (i + 1));
+      fit();
+    };
+    const fit = () => {  // scale the live-site iframe to its frame
+      const f = document.getElementById("frame"), fr = f && f.querySelector("iframe");
+      if (fr && f.offsetWidth) fr.style.transform = `scale(${f.offsetWidth / 1560})`;
+    };
+    document.getElementById("prev").onclick = () => show(i - 1);
+    document.getElementById("next").onclick = () => show(i + 1);
+    addEventListener("keydown", (e) => {
+      if (["ArrowRight", "PageDown", " "].includes(e.key)) { e.preventDefault(); show(i + 1); }
+      if (["ArrowLeft", "PageUp"].includes(e.key)) { e.preventDefault(); show(i - 1); }
+    });
+    addEventListener("resize", fit);
+    show(i);
+  })();
+</script>
+</body>
+</html>
