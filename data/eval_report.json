@@ -270,5 +270,10 @@
    "retrieved": [],
    "refused": true
   }
- ]
+ ],
+ "answers": {
+  "number_accuracy": 0.765,
+  "citation_accuracy": 0.588,
+  "refusal_accuracy": 0.875
+ }
 }

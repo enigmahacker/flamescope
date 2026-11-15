@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-11-15 (pipeline run after PR #2 and PR #3)
+
+- Merged PR #2 (empty Groq replies, Ask page text) and PR #3 (second-person check: 10 runs verified, FS-0007 held as conflict_found) into main, in that order. Reason: teammate request.
+- Ran `./pipeline.sh` with the Groq key from the local `.env` (gitignored; not printed or committed). Wrote `data/llm_answers.json` (25 answers, `openai/gpt-oss-20b`, temperature 0, SI-generated). Regenerated `data/eval_report.json`, `data/embeddings_meta.json` (EmbeddingGemma 300m, 30 chunks, now loads), and `site/src/data/bundle.json`.
+- Eval: retrieval hit rate 0.867; off-topic refusal 0.8; answers: number accuracy 0.765, citation accuracy 0.588, refusal accuracy 0.875. Number accuracy is below the 1.0 target in CLAUDE.md section 5. Rejected answers Q11, Q12, Q18 are the number-rule failures. SI-assisted.
+
 ## 2026-11-14 (audit follow-up)
 
 - Restored the two `.gitignore` lines for `raw/19950007798.txt` and `raw/19970020608.txt`. Reason: NTRS flags both papers as possibly containing copyright material (rule 10), and the lines were dropped by mistake in the cleanup commit.

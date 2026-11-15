@@ -1,0 +1,301 @@
+{
+ "meta": {
+  "ai_generated": true,
+  "generator": "Groq openai/gpt-oss-20b",
+  "temperature": 0,
+  "generated_at": "2026-11-15T08:41:15Z",
+  "note": "SI-generated text (large language model). Grounded in Flamescope runs and passages; validated by scripts/groq_generate.py."
+ },
+ "answers": [
+  {
+   "id": "Q01",
+   "question": "What oxygen fraction did the USML-1 solid surface experiment use?",
+   "answer": "The USML-1 solid surface experiment used an oxidizer of 35% oxygen.",
+   "citations": [
+    "C-0001"
+   ],
+   "refused": false,
+   "status": "validated",
+   "problems": []
+  },
+  {
+   "id": "Q02",
+   "question": "What total pressure was the USML-1 SSCE test run at?",
+   "answer": "The USML-1 SSCE test run was conducted at a total pressure of 202.650 kPa.",
+   "citations": [
+    "FS-0005"
+   ],
+   "refused": false,
+   "status": "validated",
+   "problems": []
+  },
+  {
+   "id": "Q03",
+   "question": "What leading-edge flame spread rate was measured on USML-1?",
+   "answer": "The sources in this corpus do not support an answer.",
+   "citations": [],
+   "refused": true,
+   "status": "refused",
+   "problems": []
+  },
+  {
+   "id": "Q04",
+   "question": "What spread rate did SSCE report for thin cellulose at 50% oxygen and 2.0 atm?",
+   "answer": "The Solid Surface Combustion Experiment reported a leading\u2011edge spread rate of 5.47\u202fmm/s for thin cellulose at 50\u202f% oxygen and 2.0\u202fatm.",
+   "citations": [
+    "FS-0005"
+   ],
+   "refused": false,
+   "status": "validated",
+   "problems": []
+  },
+  {
+   "id": "Q05",
+   "question": "How does flame spread rate over thin cellulose change with oxygen and pressure in the SSCE flights?",
+   "answer": "The flame spread rate over thin cellulose increases with both higher oxygen fraction and higher total pressure. For example, at 35% oxygen and 1.0\u202fatm the spread rate is 0.92\u202fcm/s, while at 35% oxygen and 1.5\u202fatm it rises to 1.50\u202fcm/s. At 50% oxygen the spread rate climbs from 3.58\u202fcm/s at 1.0\u202fatm to 5.47\u202fcm/s at 2.0\u202fatm. These results show a clear dependence on oxygen content and pressure.",
+   "citations": [
+    "FS-0001",
+    "FS-0002",
+    "FS-0003",
+    "FS-0004",
+    "FS-0005"
+   ],
+   "refused": false,
+   "status": "validated",
+   "problems": []
+  },
+  {
+   "id": "Q06",
+   "question": "What fuel sample was burned in the USML-1 solid surface combustion experiment?",
+   "answer": "The fuel sample burned in the USML-1 Solid Surface Combustion Experiment was cellulose (Whatman #1 filter paper).",
+   "citations": [
+    "FS-0001"
+   ],
+   "refused": false,
+   "status": "validated",
+   "problems": []
+  },
+  {
+   "id": "Q07",
+   "question": "Which oxygen and pressure conditions were flown in the SSCE thick PMMA experiments?",
+   "answer": "The SSCE thick PMMA experiments were flown with quiescent atmospheres of 50\u202f% O\u2082 at 202.650\u202fkPa (STS\u201164, samples\u202f1 and\u202f2) and 50\u202f% O\u2082 at 101.325\u202fkPa (STS\u201163, samples\u202f1 and\u202f2) as well as 70\u202f% O\u2082 at 101.325\u202fkPa (STS\u201154, samples\u202f1 and\u202f2).",
+   "citations": [
+    "FS-0011",
+    "FS-0010",
+    "FS-0009",
+    "FS-0008",
+    "FS-0007",
+    "FS-0006"
+   ],
+   "refused": false,
+   "status": "validated",
+   "problems": []
+  },
+  {
+   "id": "Q08",
+   "question": "Did flame spread over thick PMMA reach a steady rate in microgravity?",
+   "answer": "The flame spread rate over thick PMMA in microgravity does not reach a steady value; it slowly decreases with time after ignition.",
+   "citations": [
+    "C-0007",
+    "C-0004"
+   ],
+   "refused": false,
+   "status": "validated",
+   "problems": []
+  },
+  {
+   "id": "Q09",
+   "question": "How many PMMA samples were burned on each SSCE thick-fuel shuttle flight?",
+   "answer": "Each SSCE thick\u2011fuel shuttle flight burned two PMMA samples.",
+   "citations": [
+    "FS-0011",
+    "FS-0010",
+    "FS-0009",
+    "FS-0008"
+   ],
+   "refused": false,
+   "status": "validated",
+   "problems": []
+  },
+  {
+   "id": "Q10",
+   "question": "What was the numeric flame spread rate for the STS-63 thick PMMA runs?",
+   "answer": "The sources in this corpus do not support an answer.",
+   "citations": [],
+   "refused": true,
+   "status": "refused",
+   "problems": []
+  },
+  {
+   "id": "Q11",
+   "question": "Did the Spread Across Liquids experiments report spread that was steadier in microgravity?",
+   "answer": "The Spread Across Liquids experiments reported that flame spread in microgravity was much slower and steadier than in 1\u202fg, where the spread exhibited a pulsating character.",
+   "citations": [
+    "C-0008"
+   ],
+   "refused": false,
+   "status": "rejected",
+   "problems": [
+    "numbers not in cited rows: ['1']"
+   ]
+  },
+  {
+   "id": "Q12",
+   "question": "What liquid fuel was used in the Spread Across Liquids sounding rocket flights?",
+   "answer": "The Spread Across Liquids sounding rocket flights used 1-butanol as the liquid fuel.",
+   "citations": [
+    "C-0008"
+   ],
+   "refused": false,
+   "status": "rejected",
+   "problems": [
+    "numbers not in cited rows: ['1']"
+   ]
+  },
+  {
+   "id": "Q13",
+   "question": "What platform did the Spread Across Liquids microgravity experiments fly on?",
+   "answer": "The Spread Across Liquids microgravity experiments were flown on sounding rockets.",
+   "citations": [
+    "C-0008"
+   ],
+   "refused": false,
+   "status": "validated",
+   "problems": []
+  },
+  {
+   "id": "Q14",
+   "question": "Which runs in the table test partial gravity?",
+   "answer": "The runs that test partial gravity are FS-1259, FS-1257, FS-1256, FS-1255, FS-1254, FS-1262, FS-1261, and FS-1258.",
+   "citations": [
+    "FS-1259",
+    "FS-1257",
+    "FS-1256",
+    "FS-1255",
+    "FS-1254",
+    "FS-1262",
+    "FS-1261",
+    "FS-1258"
+   ],
+   "refused": false,
+   "status": "validated",
+   "problems": []
+  },
+  {
+   "id": "Q15",
+   "question": "What cabin atmosphere is recommended for a lunar surface habitat?",
+   "answer": "The recommended cabin atmosphere for a lunar surface habitat is 56.537\u202fkPa total pressure with 34\u202f% oxygen.",
+   "citations": [
+    "ATM-MOON"
+   ],
+   "refused": false,
+   "status": "validated",
+   "problems": []
+  },
+  {
+   "id": "Q16",
+   "question": "What microgravity spread rate did Saffire-II measure for the cotton-fiberglass (SIBAL) sample?",
+   "answer": "Saffire\u2011II measured a microgravity spread rate of 2.1\u202fmm\u202fs\u207b\u00b9 for sample\u202f2\u20115 and 2.6\u202fmm\u202fs\u207b\u00b9 for sample\u202f2\u20116, both using cotton\u2011fiberglass (SIBAL) fuel; these results are unverified.",
+   "citations": [
+    "FS-1258",
+    "FS-1259"
+   ],
+   "refused": false,
+   "status": "validated",
+   "problems": []
+  },
+  {
+   "id": "Q17",
+   "question": "Did the silicone samples spread a flame in Saffire-II?",
+   "answer": "The silicone samples in the Saffire-II experiment did not spread a flame. [FS-1257] [FS-1256] [FS-1255] [FS-1254]",
+   "citations": [
+    "FS-1257",
+    "FS-1256",
+    "FS-1255",
+    "FS-1254"
+   ],
+   "refused": false,
+   "status": "validated",
+   "problems": []
+  },
+  {
+   "id": "Q18",
+   "question": "What air flow speed was used in Saffire-I?",
+   "answer": "The air flow speed used in Saffire\u2011I was 20 cm/s.",
+   "citations": [
+    "C-0018",
+    "FS-1253"
+   ],
+   "refused": false,
+   "status": "rejected",
+   "problems": [
+    "numbers not in cited rows: ['20']"
+   ]
+  },
+  {
+   "id": "Q19",
+   "question": "What does the BASS-II investigation study?",
+   "answer": "BASS-II investigates the ignition, flame growth, flame spread, and extinction limits for solid fuels burning in low\u2011velocity forced flows in microgravity, aiming to bridge the gap between normal\u2011gravity tests and actual microgravity material flammability while providing preliminary data for refining science requirements and examining realistic, thicker fuels in typical geometries.",
+   "citations": [
+    "C-0011"
+   ],
+   "refused": false,
+   "status": "validated",
+   "problems": []
+  },
+  {
+   "id": "Q20",
+   "question": "Which verified run is the highest fire risk for a Moon habitat atmosphere?",
+   "answer": "The sources in this corpus do not support an answer.",
+   "citations": [],
+   "refused": true,
+   "status": "refused",
+   "problems": []
+  },
+  {
+   "id": "X01",
+   "question": "What is the best pizza topping?",
+   "answer": "The sources in this corpus do not support an answer.",
+   "citations": [],
+   "refused": true,
+   "status": "refused",
+   "problems": []
+  },
+  {
+   "id": "X02",
+   "question": "Who won the 1998 football world cup?",
+   "answer": "The sources in this corpus do not support an answer.",
+   "citations": [],
+   "refused": true,
+   "status": "refused",
+   "problems": []
+  },
+  {
+   "id": "X03",
+   "question": "What will the stock market do next week?",
+   "answer": "The sources in this corpus do not support an answer.",
+   "citations": [],
+   "refused": true,
+   "status": "refused",
+   "problems": []
+  },
+  {
+   "id": "X04",
+   "question": "Write me a poem about autumn leaves.",
+   "answer": "The sources in this corpus do not support an answer.",
+   "citations": [],
+   "refused": true,
+   "status": "refused",
+   "problems": []
+  },
+  {
+   "id": "X05",
+   "question": "What is the weather in Paris today?",
+   "answer": "The sources in this corpus do not support an answer.",
+   "citations": [],
+   "refused": true,
+   "status": "refused",
+   "problems": []
+  }
+ ]
+}
