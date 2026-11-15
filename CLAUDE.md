@@ -66,15 +66,15 @@ Flamescope is team Berkelium's NASA Space Apps 2026 entry. The challenge: an SI-
 
 ## 4. Current state (2026-11-14)
 - **Runs:** 275 in total.
-  - 11 from paper text: shuttle SSCE thin and thick fuel, all `unverified`.
+  - 11 from paper text: shuttle SSCE thin and thick fuel (10 verified, 1 conflict; see below).
   - 264 from PSI tables: BASS, BASS-II, Saffire I, II, and III. All are excluded because the tables give no pressure.
 - **Verified runs:** 10 (FS-0001 to FS-0006 and FS-0008 to FS-0011). A teammate (sudeepr695) checked all 11 paper-text runs against the two papers on 2026-11-15 (SI located the passages, the teammate confirmed), logged in `data/verification_log.csv`. FS-0007 is `conflict_found`: the paper has no flame data for a second STS-54 sample. The other 264 runs are excluded for missing pressure.
 - **Passages:** 30 chunks, 11 manifest sources. The BASS-II summary report (NTRS 20210011385, PSI-25 dataset) was added on 2026-11-14.
 - **Eval baseline (BM25):** hit rate 0.867, off-topic refusal 0.8.
 - **Groq model:** `openai/gpt-oss-20b`, with `max_tokens` 1500 and `reasoning_effort` low. Groq retired the Llama models for free and developer tiers on 2026-08-16.
 - **Live answers:** work with a visitor's own Groq key (the key stays in their browser tab).
-- **Offline Groq answers:** not generated yet; no key on the build machine. `data/llm_answers.json` does not exist.
-- **Embeddings:** blocked (Hugging Face 403 on `google/embeddinggemma-300m`).
+- **Offline Groq answers:** generated 2026-11-15 (`data/llm_answers.json`, 25 questions, 3 rejected by the number check and not shown).
+- **Embeddings:** vectors generated locally (`embeddings.npy` is gitignored). Retrieval in the site and eval is still BM25 only.
 - **Access:** the site and the deck are public. The earlier browser-only sign-in gate was removed before submission.
 - **Open team decisions:**
   - Mars target citation (101 kPa / 21% O2 is uncited).

@@ -69,7 +69,7 @@ NASA PSI API ──┼─ fetch.py ─> raw/ ─ extract.py ─┐ │
                │                                 ├─ build.py ─┼─> data/chunks.jsonl
 data/manifest.csv (no entry, no ingest)          │ │          └─> data/bm25_index.json
 data/runs_curated.csv (from paper text) ─────────┘ │
-                                                   ├─ embed.py ───────> data/embeddings.npy (blocked: HF access)
+                                                   ├─ embed.py ───────> data/embeddings.npy (generated locally, not shipped)
                                                    ├─ groq_generate.py ─> data/llm_answers.json (key stays local)
                                                    ├─ eval.py ────────> data/eval_report.json
                                                    └─ export.py ──────> site/src/data/bundle.json ─> next build ─> GitHub Pages (site/out)
@@ -181,6 +181,6 @@ Then open http://localhost:3000/flamescope/. For a production build, run `npm ru
 - **Seed list:** the full seed list of 10 documents was never provided; 8 manifest entries are candidates.
 - **Ranking:** the ranking criteria are provisional, because the contract's criteria document was never provided.
 - **Platforms:** `cygnus` (Saffire) and a sounding-rocket value (SAL) still need the team's approval.
-- **Groq answers:** not generated yet; no key has been set on the build machine.
-- **Embeddings:** blocked by Hugging Face access to EmbeddingGemma.
+- **Groq answers:** generated on 2026-11-15 (`data/llm_answers.json`, model `openai/gpt-oss-20b`). Answers that fail the number rule are dropped by `export.py` and never shown.
+- **Embeddings:** vectors were generated locally with EmbeddingGemma, but the site and the eval still use BM25 only. Hybrid retrieval is not scored yet.
 - **Live answers:** verified to reach Groq with a visitor's key, but the first live answers needed two checker fixes. More false rejections are possible until the Groq eval run is scored.
