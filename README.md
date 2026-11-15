@@ -95,6 +95,6 @@ Every push to `main` triggers `.github/workflows/pages.yml`, which builds `site/
 - The 11 paper-text runs (FS-0001 to FS-0011) were extracted with SI help and re-checked by SI on 2026-11-14 (not independent). On 2026-11-15 a teammate (sudeepr695) checked all 11 against the two papers: 10 are verified and FS-0007 is held out as `conflict_found` because the paper has no data for a second 70% O2 sample. FS-0001 lost its sample number, which the paper does not give. SI located the passages and the teammate confirmed the values. The log is `data/verification_log.csv`. The 264 PSI runs are unchecked and excluded.
 - The PSI tables report no pressure, so those runs are excluded from ranking.
 - The Mars target has no citation.
-- Offline Groq answers are not generated yet; no key is set on the build machine.
-- Embeddings are blocked until the Hugging Face account is granted access to `google/embeddinggemma-300m`.
+- Offline Groq answers were generated on 2026-11-15 with `openai/gpt-oss-20b` (`data/llm_answers.json`). 25 questions were run. Three answers failed the number check and are not shown; the rest are validated answers or refusals. The answer scores are in `data/eval_report.json`.
+- EmbeddingGemma vectors were generated locally (`data/embeddings_meta.json`; `embeddings.npy` is gitignored and not shipped). The site and the retrieval eval still use BM25 only, so the retrieval scores (hit rate 0.867) did not change.
 - The contract's ranking criteria and schema files were not provided, so the ranking is provisional.
