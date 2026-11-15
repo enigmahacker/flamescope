@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-11-15 (Earth footage replaces the flame animation)
+
+- Replaced the code-drawn flame particle canvas with real ISS footage of Earth, in the site hero (`site/src/components/EarthVideo.tsx`, new) and on deck slide 1 (`site/public/deck.html`). Removed `FlameCanvas.tsx` and the deck's canvas script. Reason: team request. SI-assisted.
+- Footage source: NASA Image and Video Library, "Earth Views from the ISS - No Music" (NASA ID `NHQ_2020_1221_Earth Views`, medium MP4). Cut a 16 s segment from 1795 s, cropped to 960x720, 30 fps, no audio, with the last 2 s crossfaded into the first 2 s so the 14 s loop has no jump. Stored as `site/public/media/earth.mp4` (1.5 MB) and `earth-poster.jpg`. Frames checked: no NASA logo or title card (rule 15). The footage is real, not SI-generated; the encoding and loop were done with `ffmpeg`.
+- Blend: page-coloured vignette plus inset edge shadow, a faint ember tint, and a slow `transform` drift. The video pauses offscreen (site) and off slide 1 (deck), and shows only the poster under `prefers-reduced-motion`. The Earth footage is decoration, not data; both captions say so and credit NASA.
+- Updated the "Images, audio, video" disclosure in `Dashboard.tsx` and `README.md`, which said the flame animation was drawn by code.
+
 ## 2026-11-15 (pipeline run after PR #2 and PR #3)
 
 - Merged PR #2 (empty Groq replies, Ask page text) and PR #3 (second-person check: 10 runs verified, FS-0007 held as conflict_found) into main, in that order. Reason: teammate request.

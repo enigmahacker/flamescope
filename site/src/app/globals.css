@@ -29,6 +29,8 @@ body { background: var(--color-void); color: var(--color-ink); }
 
 .shimmer { background: linear-gradient(90deg, var(--color-panel) 0%, var(--color-raise) 50%, var(--color-panel) 100%); background-size: 200% 100%; animation: shimmer 1.4s linear infinite; }
 @keyframes shimmer { to { background-position: -200% 0; } }
+.earth-drift { animation: earth-drift 42s ease-in-out infinite alternate; transform-origin: 58% 50%; will-change: transform; }
+@keyframes earth-drift { from { transform: scale(1.04); } to { transform: scale(1.14) translate3d(-1.5%, 0.8%, 0); } }
 .breathe { animation: breathe 2.4s ease-in-out infinite; }
 @keyframes breathe { 50% { opacity: 0.35; } }
 .caret::after { content: ""; display: inline-block; width: 1px; height: 1.1em; margin-left: 2px; vertical-align: -0.15em; background: var(--color-ember); animation: blink 1s steps(1) infinite; }
@@ -36,5 +38,5 @@ body { background: var(--color-void); color: var(--color-ink); }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .shimmer, .breathe, .caret::after { animation: none; }
+  .shimmer, .breathe, .caret::after, .earth-drift { animation: none; }
 }

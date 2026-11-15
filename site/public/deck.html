@@ -32,7 +32,15 @@
     .foot { margin-top: auto; display: flex; justify-content: space-between; gap: 2cqw; font-size: 1.05cqw; color: var(--mute); border-top: 1px solid var(--line); padding-top: 1cqw; }
     .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 4cqw; align-items: start; }
     .hero { display: grid; grid-template-columns: 1.15fr 1fr; gap: 3cqw; align-items: center; flex: 1; }
-    .hero canvas { width: 100%; aspect-ratio: 1; display: block; }
+    .earth { position: relative; aspect-ratio: 1; overflow: hidden; isolation: isolate; }
+    .earth video { width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0; transition: opacity 1.4s ease-out; filter: saturate(0.92) contrast(1.05) brightness(0.92);
+      transform-origin: 58% 50%; animation: drift 42s ease-in-out infinite alternate; }
+    .earth video.ready { opacity: 1; }
+    .earth::before { content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none; background: radial-gradient(60% 50% at 18% 78%, rgba(232,145,58,0.16), transparent 70%); }
+    .earth::after { content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none; background: radial-gradient(ellipse 62% 66% at 50% 62%, transparent 40%, rgba(11,13,18,0.7) 70%, #0b0d12 100%); box-shadow: inset 0 0 4cqw 2.8cqw #0b0d12; }
+    .earth .cap { position: absolute; right: 1.2cqw; bottom: 1cqw; z-index: 2; margin: 0; font-size: 1cqw; line-height: 1.3; color: var(--mute); }
+    @keyframes drift { from { transform: scale(1.04); } to { transform: scale(1.14) translate3d(-1.5%, 0.8%, 0); } }
+    @media (prefers-reduced-motion: reduce) { .earth video { animation: none; } }
     .facts { display: grid; grid-template-columns: max-content 1fr; gap: 0.8cqw 2cqw; margin: 3cqw 0 0; font-size: 1.45cqw; line-height: 1.4; border-top: 1px solid var(--line); padding-top: 1.6cqw; }
     .facts dt { color: var(--mute); }
     .facts dd { margin: 0; }
@@ -88,7 +96,7 @@
         <dt>Members</dt><dd>Aarush Koolwal, Vihaan Bafna, Aryamann Patne, Gadikota Sudeep Reddy</dd>
         <dt>Challenge</dt><dd>NASA Space Apps 2026: an SI-powered dashboard that summarizes, ranks, and interprets NASA microgravity fire findings for human exploration</dd>
       </dl>
-    </div><canvas id="flame" aria-hidden="true"></canvas></div>
+    </div><div class="earth"><video id="earth" aria-hidden="true" muted loop playsinline preload="auto" poster="media/earth-poster.jpg"><source src="media/earth.mp4" type="video/mp4"></video><p class="cap">Real footage of Earth from the ISS. Credit: NASA. Not data.</p></div></div>
     <div class="foot"><span>enigmahacker.github.io/flamescope</span><span>Deck drafted with SI (Claude). Project idea: human (team).</span></div>
   </section>
 
@@ -197,7 +205,8 @@
       document.getElementById("count").textContent = `${i + 1} / ${slides.length}`;
       history.replaceState(null, "", "#" + (i + 1));
       fit();
-      if (i === 0 && window.flameKick) setTimeout(window.flameKick);
+      const ev = document.getElementById("earth");  // footage plays only while the title slide is showing
+      if (ev) { if (i === 0 && !matchMedia("(prefers-reduced-motion: reduce)").matches) ev.play().catch(() => {}); else ev.pause(); }
     };
     const fit = () => {  // scale the live-site iframe to its frame
       const f = document.getElementById("frame"), fr = f && f.querySelector("iframe");
@@ -213,33 +222,10 @@
     show(i);
   })();
   (() => {
-    const cv = document.getElementById("flame"); if (!cv) return;
-    const ctx = cv.getContext("2d"), still = matchMedia("(prefers-reduced-motion: reduce)").matches, ps = [];
-    let w = 0, h = 0, t = 0, raf = 0;
-    const spawn = () => ({ a: Math.random() * Math.PI * 2, r: 0.18 + Math.random() * 0.06, v: 0.0009 + Math.random() * 0.0016, warm: Math.random() < 0.18 });
-    const size = () => { const d = Math.min(2, devicePixelRatio || 1); w = cv.clientWidth; h = cv.clientHeight; cv.width = w * d; cv.height = h * d; ctx.setTransform(d, 0, 0, d, 0, 0); };
-    const frame = () => {
-      t++; const cx = w / 2, cy = h / 2, R = Math.min(w, h) / 2, k = 1 + Math.sin(t / 90) * 0.025;
-      ctx.clearRect(0, 0, w, h);
-      let g = ctx.createRadialGradient(cx, cy, R * 0.05, cx, cy, R * 0.62 * k);
-      g.addColorStop(0, "rgba(232,145,58,0.55)"); g.addColorStop(0.22, "rgba(140,120,200,0.35)"); g.addColorStop(0.5, "rgba(91,132,232,0.28)"); g.addColorStop(1, "rgba(91,132,232,0)");
-      ctx.fillStyle = g; ctx.beginPath(); ctx.arc(cx, cy, R * 0.62 * k, 0, 7); ctx.fill();
-      ctx.strokeStyle = "rgba(120,160,255,0.45)"; ctx.lineWidth = 1.2; ctx.beginPath(); ctx.arc(cx, cy, R * 0.34 * k, 0, 7); ctx.stroke();
-      g = ctx.createRadialGradient(cx, cy, 0, cx, cy, R * 0.12); g.addColorStop(0, "rgba(24,28,37,1)"); g.addColorStop(1, "rgba(24,28,37,0)");
-      ctx.fillStyle = g; ctx.beginPath(); ctx.arc(cx, cy, R * 0.12, 0, 7); ctx.fill();
-      if (ps.length < 520) for (let i = 0; i < 5; i++) ps.push(spawn());
-      for (let i = ps.length - 1; i >= 0; i--) {
-        const p = ps[i]; p.r += p.v; const life = 1 - (p.r - 0.18) / 0.82;
-        if (life <= 0) { ps.splice(i, 1); continue; }
-        ctx.fillStyle = p.warm ? `rgba(232,145,58,${0.8 * life})` : `rgba(160,190,255,${0.7 * life})`;
-        ctx.beginPath(); ctx.arc(cx + Math.cos(p.a) * p.r * R, cy + Math.sin(p.a) * p.r * R, p.warm ? 1.5 : 1.2, 0, 7); ctx.fill();
-      }
-      if (!still && cv.offsetParent) raf = requestAnimationFrame(frame);
-    };
-    window.flameKick = () => { cancelAnimationFrame(raf); size(); if (still) { for (let i = 0; i < 160; i++) { const p = spawn(); p.r += Math.random() * 0.7; ps.push(p); } } frame(); };
-    addEventListener("resize", () => window.flameKick());
+    const ev = document.getElementById("earth"); if (!ev) return;
+    ev.addEventListener("loadeddata", () => ev.classList.add("ready"));
+    if (ev.readyState >= 2) ev.classList.add("ready");
   })();
-  if (window.flameKick && location.hash.replace('#', '') <= '1') window.flameKick();
 
 </script>
 </body>
