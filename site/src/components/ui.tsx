@@ -7,8 +7,8 @@ import { X } from "@phosphor-icons/react";
 import { atm, chunks, complete, docs, runs, safeUrl, statusOf } from "@/lib/engine";
 
 const BADGE: Record<string, [string, string]> = {
-  checked_against_source: ["AI re-checked", "text-ok border-ok/40"],
-  verified: ["AI re-checked", "text-ok border-ok/40"],
+  checked_against_source: ["Verified", "text-ok border-ok/40"],
+  verified: ["Verified", "text-ok border-ok/40"],
   unverified: ["Awaiting check", "text-ember border-ember/40"],
   conflict_found: ["Conflict", "text-bad border-bad/40"],
   excluded: ["Excluded", "text-bad border-bad/40"],

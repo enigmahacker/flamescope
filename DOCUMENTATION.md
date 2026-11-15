@@ -175,7 +175,7 @@ Then open http://localhost:3000/flamescope/. For a production build, run `npm ru
 - Number, citation, and refusal accuracy for Groq answers are scored after step 4b runs.
 
 ## 9. Known gaps and open decisions
-- **Verification:** FS-0001 to FS-0011 were re-checked against the papers by SI (Claude) on 2026-11-14 and are marked verified (log: `data/verification_log.csv`). It was not independent, because the same agent extracted them, and each row carries the flag `verified_by_SI_recheck_not_independent`. The brief asks for a second person, so a human check is still needed.
+- **Verification:** FS-0001 to FS-0011 were first re-checked by SI (Claude) on 2026-11-14, which was not independent. On 2026-11-15 a teammate (sudeepr695) checked all 11 against NTRS 19950007798 and 19970020608 (log: `data/verification_log.csv`). SI located the passages in the PDF text and the teammate confirmed each value. Ten rows carry the flag `verified_second_check_sudeepr695`. FS-0007 is `conflict_found` (no flame data for a second STS-54 sample) and FS-0001 has no sample number (flag `sample_number_not_in_paper`).
 - **Pressure:** the 264 PSI-table runs have no pressure, so they are excluded.
 - **Atmosphere targets:** the Mars target (101 kPa, 21% O2) has no citation. The Moon target needs team lead confirmation.
 - **Seed list:** the full seed list of 10 documents was never provided; 8 manifest entries are candidates.
