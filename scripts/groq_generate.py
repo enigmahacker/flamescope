@@ -115,11 +115,15 @@ def main():
         resp = groq("/chat/completions", key, {"model": CFG["model"], "messages": msgs, "temperature": CFG["temperature"],
                                                "max_tokens": CFG["max_tokens"], "reasoning_effort": CFG.get("reasoning_effort", "low"),
                                                "response_format": {"type": "json_object"}})
+        choice = resp["choices"][0]
         try:
-            ans = json.loads(resp["choices"][0]["message"]["content"])
-        except (KeyError, json.JSONDecodeError):
-            ans = {"supported": False, "answer": "", "citations": []}
-        status, problems = validate(ans, runs, chunks, atm)
+            ans = json.loads(choice["message"].get("content") or "")
+        except json.JSONDecodeError:
+            # An empty or cut-off reply (finish_reason "length" means the reasoning used the whole token budget)
+            # is a failure to answer. It must not be stored as a refusal, because that would hide the problem.
+            ans, status, problems = {"supported": False, "answer": "", "citations": []}, "error", [f"no valid JSON reply (finish_reason={choice.get('finish_reason')})"]
+        else:
+            status, problems = validate(ans, runs, chunks, atm)
         out.append({"id": q["id"], "question": q["question"], "answer": ans.get("answer", ""), "citations": ans.get("citations", []),
                     "refused": status == "refused", "status": status, "problems": problems})
         print(q["id"], status, problems or "")
