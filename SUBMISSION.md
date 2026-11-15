@@ -58,6 +58,8 @@ Python (standard library, sentence-transformers), TypeScript with Next.js, React
 - NTRS 19970020608: *Solid Surface Combustion Experiment: Thick Fuel Results*.
 - NTRS 19990054039: *Flame Spread Across Liquids: Experimental Results*.
 - NTRS 20130013505: NASA/TM-2013-217377, *Effects of the 8 psia / 32% O2 Atmosphere on the Human in the Spaceflight Environment*. This is the source of the lunar atmosphere target.
+- NTRS 20210011385: *Burning and Suppression of Solids-II (BASS-II) Summary Report*, the report for the PSI-25 experiment. Abstract and one sentence are quoted; the full text is not published.
+- NASA Image and Video Library: "Earth Views from the ISS - No Music" (NASA ID NHQ_2020_1221_Earth Views), cut into the background video on the site hero and deck slide 1. It is decoration, not data, and is not SI-generated.
 - NASA Physical Sciences Informatics, all CC0-1.0:
 
 | Investigation | DOI |

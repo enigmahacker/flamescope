@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-11-15 (SUBMISSION.md sync)
+
+- SUBMISSION.md: added NTRS 20210011385 (BASS-II summary report, manifest D-0011) and the NASA Image and Video Library ISS footage credit to the NASA Data section. Reason: both were in the repo (manifest, site hero and deck) but missing from the submission text. Not SI-generated text; no data changed.
+
 ## 2026-11-15 (Earth footage replaces the flame animation)
 
 - Replaced the code-drawn flame particle canvas with real ISS footage of Earth, in the site hero (`site/src/components/EarthVideo.tsx`, new) and on deck slide 1 (`site/public/deck.html`). Removed `FlameCanvas.tsx` and the deck's canvas script. Reason: team request. SI-assisted.
