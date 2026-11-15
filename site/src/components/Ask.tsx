@@ -156,7 +156,7 @@ export default function Ask() {
       </div>
 
       <aside className="lg:pt-2">
-        <p className="max-w-[45ch] leading-relaxed text-mute">Search runs in your browser over a fixed index. SI answers were generated offline by a Groq-hosted model from the retrieved records, and an answer is kept only if every number in it matches the run table.</p>
+        <p className="max-w-[45ch] leading-relaxed text-mute">Search runs in your browser over a fixed index.{DATA.llm ? " SI answers were generated offline by a Groq-hosted model from the retrieved records, and an answer is kept only if every number in it matches the run table." : " Answers shown here are drafted offline with SI and checked against the run table."}</p>
         <details className="group mt-8 rounded-2xl border border-line bg-panel p-5 open:pb-6">
           <summary className="flex cursor-pointer list-none items-center gap-2 text-sm font-medium"><Key size={16} className="text-ember" />Live answers with your own Groq key{hasKey && <span className="ml-auto inline-flex items-center gap-1.5 text-xs text-ok"><i className="breathe inline-block h-1.5 w-1.5 rounded-full bg-ok" />On</span>}</summary>
           <p className="mt-3 text-sm leading-relaxed text-mute">The key stays in this tab only and goes straight to api.groq.com. Flamescope never stores a key in the site.</p>
